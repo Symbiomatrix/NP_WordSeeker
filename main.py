@@ -34,6 +34,8 @@ Bugs:
 Yes please.
 
 Version log:
+21/09/19 V1.2 Added clear keyword.
+                Enabled singular string input (split to single chars).
 21/09/19 V1.1 Changed to prod, created main functions.
                 Major bugfix in create trie.
                 Added much needed reprint of input for copypastaing,
@@ -121,7 +123,7 @@ FMAIN = 2 # 1 = Create dict trie. 2 = Looped word search.
 Deb_Prtlog = lambda x,y = logging.ERROR:uti.Deb_Prtlog(x,y,logger)
 LSTPH = uti.LSTPH
 REDELIM = "[, \n]" # Delims for free input.
-REINPEND = "end|fin|quit|\." # Keywords which end input.
+REINPEND = ";end|;fin|;quit|\." # Keywords which end input.
 SECONDS = 1
 MINUTES = 60 * SECONDS
 HOURS = 60 * MINUTES
@@ -140,15 +142,16 @@ DEFDT = datetime.datetime(1971,1,1)
 TILEGOLD = "=" # These are faster to type than +*.
 TILECURSE = "-"
 TILEQM = "?"
+TILECLR = "$"
 TILEADD = "+"
 TILEREM = "/"
 TILECHG = "*"
 # I'm using regex based string replacements.
 # Others aren't list based either, cept magicrep which needs a dict.
 RETILEPOS = BRKTEER.format(TILEADD + TILEREM + TILECHG)
-RETILEACT = BRKTEER.format(TILEQM)
+RETILEACT = BRKTEER.format(TILEQM + TILECLR)
 RETILEVAL = BRKTEER.format(TILEGOLD + TILECURSE)
-TILEVAL2 = (" " + TILEGOLD + TILECURSE,"012")
+TILEVAL2 = (" " + TILECURSE + TILEGOLD,"012")
 SCLET = [("ADEGHILNORSTU".lower(),100),
          ("BCFKMPQVWY".lower(),200),
          ("JXZ".lower(),300)]
@@ -499,10 +502,16 @@ def Graph_Input():
                     prmchg = [3]
                 prmchg.append(int(re.sub(RETILEPOS,"",cinp[i])))
             elif len(re.findall(RETILEACT,cinp[i])) > 0:
-                if TILEQM in cinp[i]:
+                if TILEQM in cinp[i]: # Print current values.
                     print(LOGMSG["grpinpmsg"])
                     print(LOGMSG["grpprtmsg"])
                     Print_Hexagrid(tinp)
+                elif TILECLR in cinp[i]: # Clear.
+                    # Creep: Range clear, could use /20 30 format.
+                    tinp.clear()
+                    cedit.clear()
+            elif cinp[i].isalpha() and prmchg is None: # Contains no modifiers.
+                cedit.extend((c,0) for c in cinp[i])
             elif len(cinp[i]) > 0:
                 if TILECURSE in cinp[i]:
                     vtile = 1
