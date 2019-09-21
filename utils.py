@@ -44,7 +44,8 @@ Version log (incrementing on imports):
 16/01/18 V3.4 Added sign.
 12/01/18 V3.3 Added multikey get / set functionality to ini using temp class. 
 11/01/18 V3.2 Added directory creation (lite cannot).
-25/12/17 V3.1 Expanded ini to convert complex lists (of strings, no class return). Added deque.
+25/12/17 V3.1 Expanded ini to convert complex lists (of strings, no class return).
+                Added deque.
 24/12/17 V3.0 Added str left/right, ini class.
 20/12/17 V2.1 Added int sequence.
 16/12/17 V2.0 Continued from pa.
@@ -396,7 +397,9 @@ def Open_Progfile(flpt,prgpt = None,timeout = -1):
     if prgpt is not None:
         fargs.insert(0,prgpt)
     else:
-        shell = True # Bad idea, but not alt found for opening as default. File is validated at any rate.
+        # Bad idea, but no alt found for opening as default.
+        # File is validated at any rate.
+        shell = True
     (err,_) = File_Exists(flpt)
     if err != 1:
         return METHCODES["wfilnext"]
@@ -701,8 +704,10 @@ def Timed_Input(boolmd,vprompt,vwait,vkey = REGANY,
             # Process result at convenience.
             lrefs = re.finditer(vkey,qget,REIS)
             for cref in lrefs:
-                tmpspn = (cref.span(0)[0],cref.span(0)[1]) # Refer to other capture groups using span num.
-                if indresp and tmpspn[0] == tmpspn[1]: # "Any" reg gives additional empty result len-len, ignore.
+                # Refer to other capture groups using span num.
+                tmpspn = (cref.span(0)[0],cref.span(0)[1])
+                if indresp and tmpspn[0] == tmpspn[1]:
+                    # "Any" reg gives additional empty result len-len, ignore. 
                     pass
                 elif tmpspn[0] == tmpspn[1]:
                     stresp = "" # But if no input, it is the only one which is okay.
@@ -998,7 +1003,7 @@ class IniFile:
             strc = vstr1[tmpspn[0]:tmpspn[1]]
             if strc == "[": # Start new list as mem of cur, shelve to old.
                 if strmode:
-                    msgerr = "Cilist struct error, unclosed str at {}-{}.d".format(st,tmpspn[0])
+                    msgerr = "Cilist struct error, unclosed str at {}-{}.".format(st,tmpspn[0])
                     logger.error(msgerr)
                     raise TypeError(msgerr)
                 vque.append(pack1)

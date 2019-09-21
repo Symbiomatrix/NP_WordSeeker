@@ -5,8 +5,8 @@ Created on 20/09/19
 
 @author: Symbiomatrix
 
-Todo:
-- Navigation function: Simple A* bfs without costs. 
+Todo: 
+Finishing touches to main. Make it more robust to bad input.
 
 Features:
 Given a graph of possible movements, values, and 'specials' per node,
@@ -16,16 +16,26 @@ find all paths leading to a viable word.
 In this game, it's hexagonal which is +-a 2d array with diagonals.
 - Trie class conversion of the base dicts including search and modification.
 - Graph class of connected nodes for storing game grid, hexagon tailoring.
-  Contains one main dict, node key (tup), node has value + power + tup of refs. 
+  Contains one main dict, node key (tup), node has value + power + tup of refs.
+- Navigation function: Prolly based on dijkstra, checks all graph routes 
+    available on the dict tries. 
 
 Future:
- 
 
 Notes:
+- Chain formula: score = clength * (1 + 3 * [gold tiles]) * base
+  Base is 100 for symbols, 300 for digits (prolly an oversight), varies per letters.
+  The letter value is semi dependent on the letter (eg X seems to be 300 always),
+  but may vary within the same grid. The tiny yellow dots in each tile show it.
+  Possibly useful to create a general guidelines, but it's negligible.
+  I'm 95% certain the reason for discrepancies is that shuffle doesn't alter tvalue. 
 
 Bugs:
+Yes please.
 
 Version log:
+21/09/19 V1.0 Added trieversal, print hexagrid, score sort & print.
+                HANDLE WITH CARE.
 21/09/19 V0.6 Added trie and graph with input for both (mostly complete). 
 20/09/19 V0.1 General structure initiated. 
 20/09/19 V0.0 New.
@@ -94,6 +104,7 @@ import re
 
 import inspect
 from collections import OrderedDict # v
+from collections import deque # v
 
 # import requests
 # from selenium import webdriver
@@ -105,7 +116,7 @@ from collections import OrderedDict # v
 FMAIN = 1 # 1 = Location list. 2 = Employee range list. 3 = Unfiltered.
 Deb_Prtlog = lambda x,y = logging.ERROR:uti.Deb_Prtlog(x,y,logger)
 LSTPH = uti.LSTPH
-REGDELIM = "[, ]" # Delims for free input.
+REDELIM = "[, \n]" # Delims for free input.
 REINPEND = "end|fin|quit|\." # Keywords which end input.
 SECONDS = 1
 MINUTES = 60 * SECONDS
@@ -130,7 +141,10 @@ TILECHG = "*"
 # I'm using regex based string replacements.
 # Others aren't list based either, cept magicrep which needs a dict.
 RETILEPOS = BRKTEER.format(TILEADD + TILEREM + TILECHG)
-RETILEVAL = BRKTEER.format(TILEGOLD + TILECURSE) 
+RETILEVAL = BRKTEER.format(TILEGOLD + TILECURSE)
+SCLET = [("ADEGHILNORSTU".lower(),100),
+         ("BCFKMPQVWY".lower(),200),
+         ("JXZ".lower(),300)]
 
 LOGMSG = uti.LOGMSG
 LOGMSG.update({
@@ -144,6 +158,7 @@ LOGMSG.update({
 "grpinpmsg": """Please write down values for graph: columnwise l2r,
                 space separate values and denote +/* for gold / cursed.""",
 "grpprtmsg": "Current graph state:",
+"trievrok": "Completed trieversal in {} .",
 "null": "This is the end my friend."
 })
 METHCODES = uti.METHCODES
@@ -282,8 +297,97 @@ class BNgraph():
         """Seeks dictionary words connected uniquely in the graph.
         
         Gives 2 scores, one for longevity (clearing deep cursed tiles)
-        and one for extra gold tiles."""
+        and one for max score with extra gold tiles.
+        Observe the score formula - a single gold tile outweighs
+        pretty much any chain length.
+        Queue format: Chain (list of ids),current graph node,
+        current tri1 / tri2 nodes (separate checks)."""
+        logger.debug("Start trieverse")
+        uti.St_Timer("trieverse")
+        vque = deque()
+        # Start from any letter and no match.
+        for k in self.root.keys():
+            if k is not None:
+                nnode = self.root[k]
+                vque.append(([k],nnode,
+                             tri1.refs[nnode.value[0]]))
+                vque.append(([k],nnode,
+                             tri2.refs[nnode.value[0]]))
+        
+        # In a dfs loop, check if any adjacent gns have trie depth,
+        # and any valid results along the way are stored for later.
+        # Do not repeat routes - skip neighbour if on the chain.
+        stopme = 1000000 # 10000 in 0.021s, so speed is no issue at all.
+        cntstop = 0
+        lres = []
+        while vque:
+            (lchain,cnode,ctri) = vque.pop()
+            if ctri.indvalid:
+                lres.append(lchain)
+            for k in cnode.refs.keys():
+                if not k in lchain:
+                    nnode = cnode.refs[k]
+                    nchain = lchain[:]
+                    nchain.append(k)
+                    if nnode.value[0] in ctri.refs:
+                        vque.append((nchain,nnode,
+                                     ctri.refs[nnode.value[0]]))
+            
+            cntstop = cntstop + 1
+            if cntstop >= stopme:
+                vque = None   
+            
+        tdiff = uti.Ed_Timer("trieverse")
+        Deb_Prtlog(LOGMSG["trievrok"].format(tdiff),logging.DEBUG)
+        return lres
     
+    def Word_Score(self,lres):
+        """Grades word combos based on danger and value.
+        
+        See score formula above.
+        As for danger, whilst removing 2+ tiles below cursed is bad,
+        it's most important to rank depth exponentially (game over at bottom).
+        Don't actually measure depth precisely, but the exp should suffice."""
+        lsort = []
+        for lchain in lres:
+            vscore1 = 0
+            vscore2 = 0
+            gcnt = 0
+            for cid in lchain:
+                (cchr,ctyp) = self.root[cid].value
+                if ctyp == 1: # Cursed penalty is heavier by row.
+                    vscore2 = vscore2 + 100 * (4 ** cid[1])
+                elif ctyp == 2:
+                    gcnt = gcnt + 1
+                for chksc in SCLET: # Letter value check. Dict should be equivalent.
+                    if cchr in chksc[0]:
+                        cmod = chksc[1]
+                vscore1 = vscore1 + cmod
+                vscore2 = vscore2 + cmod
+            vscore1 = vscore1 * (1 + gcnt * 3)
+            vscore2 = vscore2 * (1 + gcnt * 3)
+            lsort.append((lchain,vscore1,vscore2))
+        
+        lsort1 = sorted(lsort,key=lambda x:x[1],reverse = True)
+        lsort2 = sorted(lsort,key=lambda x:x[2],reverse = True)
+                
+        return (lsort1,lsort2)
+
+    def Print_Scores(self,lscore,maxvals = 10):
+        """Prints the most lucrative chains.
+        
+        Lscore is as output from scoring function - chain and 1+ score cols,
+        though only the first is shown (call the function with each sort). 
+        Includes the word itself, score, and then full chain details if needed."""
+        idx = 0
+        indstop = False
+        while not indstop:
+            combo1 = lscore[idx]
+            wrd1 = "".join([self.root[k].value[0] for k in combo1[0]])
+            print(wrd1,combo1[1],"|",combo1[0])
+            idx = idx + 1
+            if idx >= maxvals or idx >= len(lscore):
+                indstop = True
 
 def DebP_Curbod(curbod,htmlbod,windlen = 30):
     """Short segment for print around list markers in long text.
@@ -373,7 +477,7 @@ def Graph_Input():
         if len(re.findall(REINPEND,ursp.lower())) > 0: # Terminate after reading.
             indstop = True
             ursp = re.sub(REINPEND,"",ursp.lower())
-        cinp = re.split("[, ]",ursp)
+        cinp = re.split(REDELIM,ursp)
         cedit = []
         for i,_ in enumerate(cinp):
             if len(re.findall(RETILEPOS,cinp[i])) > 0:
@@ -385,7 +489,7 @@ def Graph_Input():
                 if TILECHG in cinp[i]:
                     prmchg = [3]
                 prmchg.append(int(re.sub(RETILEPOS,"",cinp[i])))
-            else:
+            elif len(cinp[i]) > 0:
                 if TILECURSE in cinp[i]:
                     vtile = 1
                 elif TILEGOLD in cinp[i]:
@@ -408,17 +512,64 @@ def Graph_Input():
             
     return tinp
 
+def Hexify(lval,rcnt = 6,indconvex = False):
+    """Converts L1 to L2 of hex shape.
+    
+    Row count refers to first col, which is +1 if convex."""
+    if indconvex:
+        conbase = 0
+    else:
+        conbase = 1
+    conmod = (conbase * 2 - 1)
+    
+    colmod = 0
+    vret = []
+    l2 = []
+    for i,_ in enumerate(lval):
+        l2.append(lval[i])
+        if len(l2) >= rcnt + conmod * colmod:
+            # Filled a col, switch to odd / even and append it to L2.
+            colmod = 1 - colmod
+            vret.append(l2)
+            l2 = []
+    if len(l2) > 0:
+        vret.append(l2)
+        l2 = []
+    
+    return vret
+
 def Print_Hexagrid(lval,rcnt = 6,ccnt = 9,indconvex = False):
     """Print a 2 value list on a full hexagrid of some length.
     
-    The colcount is normal, row count for leftmost col,
-    if convex will drop on even rows.
+    The colcount is normal, row count for leftmost col.
+    If convex will put odd cols on odd rows (eg 0.0),
+    and the row counter varies (+1 for concave yet mod shifted back). 
     Visually fitted currently in a checkered pattern.
-    If the list is partially filled, prints column-row wise from top left."""
-    for ridx in range(rcnt):
+    If the list is partially filled, prints column-row wise from top left.
+    Sample grid index calcs are in a test sheet for clarification."""
+    if indconvex:
+        conbase = 0
+    else:
+        conbase = 1
+    conmod = (conbase * 2 - 1)
+    maxrow = (rcnt + conbase) * 2 - 1 # Adds spaces in between.
+    for ridx in range(maxrow):
+        lrow = []
         for cidx in range(ccnt):
-            pass
-            #CONT
+            if (ridx + conbase) % 2 == cidx % 2:
+                # Col lengths alternate, so need a separate count.
+                tidx = int(cidx * (rcnt - 1 + conbase) +
+                           (cidx - cidx % 2 * conmod) / 2)
+                if (ridx // 2 + tidx < len(lval) 
+                and (indconvex or cidx % 2 != 0 or ridx < maxrow - 1)):
+                    # Join the keys. All keys used must be strings.
+                    lrow.append(",".join((str(c) for c in 
+                                          lval[ridx // 2 + tidx])))
+                else:
+                    lrow.append("   ")
+            else:
+                lrow.append(" | ")
+        print("".join(lrow))
 
 # BM! MAIN()
 def Main_Test():
@@ -433,7 +584,7 @@ def Main_Test():
 #     (cmpdb,infdb,dbini) = dbrefs
     indstop = False
     verr = 0
-    btc = 100 # dbini["Main"][INIBTC]
+    btc = 1000 # dbini["Main"][INIBTC]
 #     ddl = ldb.Date_Conv(dbini["Main"][INIDDL])
 #    from Rawdt_LDL import lwin
 #    lfail = [("Crystal_Babyface-2000-11-27.jpg","19-Sep-2001 19:44 ","7.9K"),
@@ -443,17 +594,44 @@ def Main_Test():
     while not indstop:
         if 1 != 0:
             # Trie.
-            #tstrie = BNtrie()
-            #tstrie.build_dict(np.array(("ziggy","wino")))
-            #Convert_Dict()
-            #(tri1,tri2) = Load_Dict()
-            #print(list(tri1.refs["a"].refs["a"].refs["h"].refs["s"].refs.keys()))
-            #print(tri1.search("aardvark"))
+#             tstrie = BNtrie()
+#             tstrie.build_dict(np.array(("ziggy","wino")))
+#             Convert_Dict()
+            (tri1,tri2) = Load_Dict()
+#             print(list(tri1.refs["a"].refs["a"].refs["h"].refs["s"].refs.keys()))
+#             print(tri1.search("aardvark"))
             
             # Graph.
-            #groot = BNgraph(None)
-            #groot.build_hex([[10,20,30],[11,21,31,41],[12,22,32]])
-            Graph_Input()
+            groot = BNgraph(None)
+#             groot.build_hex([[10,20,30],[11,21,31,41],[12,22,32]])
+            gi = Graph_Input()
+#             smpl = """k,u,l,i,n,o,
+#                       t,l,s,o,j,o,u,
+#                       a,r,a,a,a,n,
+#                       n,d,u,a,s,o,z,
+#                       i,a,i,g,a,a,
+#                       d,i,a,l,t,f,s,
+#                       t,t,o,a,y,l,
+#                       u,n,a,i,a,r,i,
+#                       n,q,n,l,t,v"""
+#             gi = re.split(REDELIM,smpl)
+#             gi = [(v,0) for v in gi if len(v) > 0]
+#             gi[10] = gi[10][0],1
+#             gi[20] = gi[20][0],2
+#             gi[30] = gi[30][0],1
+#             gi[40] = gi[40][0],2
+#             Print_Hexagrid(gi)
+            gi = Hexify(gi)
+            groot.build_hex(gi)
+#             Print_Hexagrid([["a",1],["b",0],["c",2],["d",0]] * 30)
+            
+            # Pathing.
+            potword = groot.trieverse(tri1,tri2)
+            (dang,optim) = groot.Word_Score(potword)
+            print("Topmost score:")
+            groot.Print_Scores(dang)
+            print("Topmost danger:")
+            groot.Print_Scores(optim)
             
             print(verr)
             indstop = True # TEST
