@@ -6,8 +6,6 @@ Created on 20/09/19
 @author: Symbiomatrix
 
 Todo:
-- Trie class: Most basic, indword + dict of letters to other tries.
-- Graph class: One main dict, node key (tup), node has value + power + tup of refs.
 - Navigation function: Simple A* bfs without costs. 
 
 Features:
@@ -15,7 +13,10 @@ Given a graph of possible movements, values, and 'specials' per node,
 and dictionary of good / bad words,
 constructs a trie or two from the dicts, and traverses the graph to 
 find all paths leading to a viable word. 
-In this game, it's hexagonal which is +-a 2d array with diagonals.  
+In this game, it's hexagonal which is +-a 2d array with diagonals.
+- Trie class conversion of the base dicts including search and modification.
+- Graph class of connected nodes for storing game grid, hexagon tailoring.
+  Contains one main dict, node key (tup), node has value + power + tup of refs. 
 
 Future:
  
@@ -25,6 +26,7 @@ Notes:
 Bugs:
 
 Version log:
+21/09/19 V0.6 Added trie and graph with input for both (mostly complete). 
 20/09/19 V0.1 General structure initiated. 
 20/09/19 V0.0 New.
 
@@ -78,8 +80,6 @@ if __name__ == '__main__':
 SYSENC = "cp1255" # System default encoding for safe logging.
 
 import utils as uti
-import pdwan as pdu
-BmxFrame = pdu.BmxFrame
 # import Design_FT # Main - once interfaces are added.
 # import Design2_FT # Query.
 import time
@@ -89,12 +89,11 @@ from itertools import product # v
 import hashlib
 import pandas as pd
 import numpy as np
+import pickle
+import re
 
 import inspect
 from collections import OrderedDict # v
-
-pd.set_option("display.width",140)
-pd.set_option("display.max_columns",8)
 
 # import requests
 # from selenium import webdriver
@@ -106,26 +105,45 @@ pd.set_option("display.max_columns",8)
 FMAIN = 1 # 1 = Location list. 2 = Employee range list. 3 = Unfiltered.
 Deb_Prtlog = lambda x,y = logging.ERROR:uti.Deb_Prtlog(x,y,logger)
 LSTPH = uti.LSTPH
+REGDELIM = "[, ]" # Delims for free input.
+REINPEND = "end|fin|quit|\." # Keywords which end input.
 SECONDS = 1
 MINUTES = 60 * SECONDS
 HOURS = 60 * MINUTES
 DAYS = 24 * HOURS
+RSPTMO = 999
 BCKSLS = "\\"
 SLSH = "/"
 APOS = "\'"
 QUOS = "\""
 NLN = "\n"
+BRKTEER = "[{}]" 
 SPRTXT = """char(13) || '---' || char(13)"""
 #QUOTSCP = (r"""‘’‚“”„""","""\'\'\'\"\"\"""")
 HASHDEF = 8 # Number of digits.
 DEFDT = datetime.datetime(1971,1,1)
-TSTMON = pd.date_range("2019-01-01","2019-02-01",closed="left")
-NARCOLEPSY = 0.5 * pdu.HOUR # Max time for rest / wake (uniform distro).
-INSOMNIA = pdu.HOUR # They may still be merged to a longer period.
-GENRULER2 = ["pid","day","sylladex","ostatus","ostart","oend","rdur"]
+TILEGOLD = "=" # These are faster to type than +*.
+TILECURSE = "-"
+TILEADD = "+"
+TILEREM = "/"
+TILECHG = "*"
+# I'm using regex based string replacements.
+# Others aren't list based either, cept magicrep which needs a dict.
+RETILEPOS = BRKTEER.format(TILEADD + TILEREM + TILECHG)
+RETILEVAL = BRKTEER.format(TILEGOLD + TILECURSE) 
 
 LOGMSG = uti.LOGMSG
 LOGMSG.update({
+"loger": "Unknown error in log encoding.\n {} {}",
+"mainok": "Run completed.",
+"mainer": "Run crashed, check log.",
+"lfrmter1": "Insufficient parameters sent to format.",
+"lfrmter2": "Excessive parameters sent to format.",
+"dconvok": "Conversion completed in {} .",
+"dloadok": "Load completed in {} .",
+"grpinpmsg": """Please write down values for graph: columnwise l2r,
+                space separate values and denote +/* for gold / cursed.""",
+"grpprtmsg": "Current graph state:",
 "null": "This is the end my friend."
 })
 METHCODES = uti.METHCODES
@@ -133,13 +151,139 @@ METHCODES.update({
 "ok": (0,""),
 })
 REVMETHCD = {v[0]: (k,v[1]) for (k,v) in METHCODES.items()}
-uti.FDEFS.update({
-"Gensmp":{"cntid":10,"prvid":None,"dfpid":None,
-          "dfdays":TSTMON,"tmday":"07:00","tmngt":"22:00","uvar":4,
-          "sttday":4,"sttngt":2},
-})
 
 # BM! Defs
+
+def ckbnd(lst1,idx):
+    """Checks if the index is within bounds of an array or nested list.
+    
+    Index should be a list per dim, betwixt 0-len of each."""
+    l1 = lst1
+    i = 0
+    for i in idx:
+        if i < 0 or i >= len(l1):
+            return False
+        else:
+            l1 = l1[i]
+    return True
+
+class BNtrie():
+    """Trie = prefix search tree.
+    
+    Partially implemented: Init, search, batch add / deactivate."""
+    def __init__(self,pptr = None):
+        """Init."""
+        self.indvalid = False
+        self.refs = dict()
+        self.parent = pptr
+    
+    def build_dict(self,lsrc,indvalid = True):
+        """Adds to trie from an iterable of words. 
+        
+        Each word creates new nodes as needed, and finally marks validity.
+        Can also cancel out existing validity."""
+        for wrd1 in lsrc:
+            self.search(wrd1,indvalid)
+        
+        return self
+    
+    def search(self,str1,indvalid = None):
+        """Search whether string is valid in trie.
+        
+        Doubles as a creation function if indvalid is not null.
+        Delete is currently simplified - only avoid creating nodes,
+        don't cascade prune the trie."""
+        indstop = False
+        i = 0
+        cnode = self
+        while not indstop: # Traverse the trie with current word, char by char.
+            chr1 = str1[i] 
+            if chr1 not in cnode.refs: # Create new node if nonexistent.
+                if indvalid is None: # Search is read only.
+                    indstop = True
+                    return False
+                elif not indvalid:
+                    cnode.refs[chr1] = BNtrie(cnode)
+                else: # In negation mode will not create anything either.
+                    indstop = True
+                    return False # Freeing nodes is trickier.
+            cnode = cnode.refs[chr1]
+            i = i + 1
+            if i >= len(str1):
+                indstop = True
+        if indvalid is not None: # Set value.
+            cnode.indvalid = indvalid
+        else:
+            return cnode.indvalid
+        
+        return None
+
+class BNgraph():
+    """Graphs = nodes connected to one another (foregoing the edges).
+    
+    Since I'm lazy, should create an empty root ref for the graph.
+    Partially implemented: Init, hexagonal creation."""
+    root = dict()
+    def __init__(self,newid,newval = None):
+        """Init."""
+        self.id = newid
+        self.root[self.id] = self
+        self.value = newval
+        self.refs = dict()
+    
+    def addcon(self,cid):
+        """Add a connection from this node to another id.
+        
+        Both nodes must exist - defer connecting until they're all created."""
+        self.refs[cid] = self.root[cid]
+    
+    def build_hex(self,lsrc,indconvex = False):
+        """Creates a hexagonally connected graph.
+        
+        Basically, it's a 2d array with alternating number of rows per column,
+        which is connected in orthogonal directions and one diagonal,
+        based on whether it's convex / concave, ie top left node is the highest;
+        convex => even cols connected to both vals one row above (-1)
+        and odd to below (+1), concave is vice versa.
+        Please supply the list of values columnwise - it's the easiest to view."""
+        idxr = 0
+        idxc = 0
+        if indconvex:
+            conbase = 1
+        else:
+            conbase = -1
+        
+        # Create nodes.
+        for idxc,_ in enumerate(lsrc):
+            for idxr,_ in enumerate(lsrc[idxc]):
+                BNgraph((idxc,idxr),lsrc[idxc][idxr])
+                
+        # Add their connections - orthogonal and one sided diag.
+        for idxc,_ in enumerate(lsrc):
+            # Due to the 0-idx setting, even and odd are reversed.
+            conmod = int(((idxc % 2) * 2 - 1) * conbase)
+            for idxr,_ in enumerate(lsrc[idxc]):
+                if ckbnd(lsrc,(idxc,idxr - 1)):
+                    self.root[(idxc,idxr)].addcon((idxc,idxr - 1))
+                if ckbnd(lsrc,(idxc,idxr + 1)):
+                    self.root[(idxc,idxr)].addcon((idxc,idxr + 1))
+                if ckbnd(lsrc,(idxc - 1,idxr)):
+                    self.root[(idxc,idxr)].addcon((idxc - 1,idxr))
+                if ckbnd(lsrc,(idxc + 1,idxr)):
+                    self.root[(idxc,idxr)].addcon((idxc + 1,idxr))
+                if ckbnd(lsrc,(idxc - 1,idxr + conmod)):
+                    self.root[(idxc,idxr)].addcon((idxc - 1,idxr + conmod))
+                if ckbnd(lsrc,(idxc + 1,idxr + conmod)):
+                    self.root[(idxc,idxr)].addcon((idxc + 1,idxr + conmod))
+        
+        return self
+    
+    def trieverse(self,tri1,tri2):
+        """Seeks dictionary words connected uniquely in the graph.
+        
+        Gives 2 scores, one for longevity (clearing deep cursed tiles)
+        and one for extra gold tiles."""
+    
 
 def DebP_Curbod(curbod,htmlbod,windlen = 30):
     """Short segment for print around list markers in long text.
@@ -170,115 +314,111 @@ def DebP_Select(seldb,ftc = 1000):
         i = i + 1
         tdiff = uti.Ed_Timer("Dbprint")
         logger.debug("Batch {} time: {}".format(i,tdiff))
-        
-def Status_Times(vtyp,df,kday):
-    """Create status start + end along the day.
-    
-    1 = narcolepsy from morn to night.
-    2 = insomnia from night to next morn."""
-    if vtyp == 1:
-        kcnt = "sttday"
-        kfrom = "twake"
-        kto = "tsleep"
-        nstat = 4
-        mxdur = NARCOLEPSY
-    elif vtyp == 2:
-        kcnt = "sttngt"
-        kfrom = "tsleep"
-        kto = "tnwake"
-        nstat = 5
-        mxdur = INSOMNIA
-    df["newrow"] = df[kcnt] + 1
-    dfst = df.Expandong("newrow")
-    # Multiindex is inconvenient as hell. There's groupby level,
-    # but it's more statistical. Cannot seem to shift it directly.
-    dfst["twake"] = df["twake"]
-    dfst["tnwake"] = df["tnwake"]
-    dfst["tsleep"] = df["tsleep"]
-    dfst.reset_index(inplace = True)
-    dfst["firstrec2"] = ((dfst["pid"] != dfst["pid"].shift(1)) |
-                         (dfst[kday] != dfst[kday].shift(1)))
-    dfst["lastrec2"] = ((dfst["pid"] != dfst["pid"].shift(-1)) |
-                         (dfst[kday] != dfst[kday].shift(-1)))
-    dfst["grp2"] = dfst["firstrec2"].cumsum()
-    dfst["raindeer"] = dfst.Rand_DirichletG(group = "grp2")
-    dfst["crane"] = dfst.groupby(dfst["grp2"])["raindeer"].cumsum()
-    dfst["tdiff"] = dfst[kto] - dfst[kfrom]
-    dfst["ostart"] = dfst[kfrom] + dfst["crane"] * dfst["tdiff"]
-    dfst["ostatus"] = nstat
-    dfst["rdur"] = dfst.Rand_Time(ubnd = mxdur)
-    dfst["oend"] = dfst["ostart"] + dfst["rdur"]
-    return dfst
 
-def Generate_Samples(vtyp = 1,**parms):
-    """Creates a frame of ids, statuses or vitals.
+def Convert_Dict(indfrc = False,indsave = True):
+    """Builds counter arr from raw dict, all saved to file.  
     
-    Ids = 1, stat = 2, vit = 3.
-    For stat / vit, send ids for which to generate data,
-    and optionally dates."""
-    vret = None
-    rund = uti.Default_Dict("Gensmp",parms)
-    if vtyp == 1: # Pid.
-        df = BmxFrame(rcnt = rund["cntid"])
-        if not rund["prvid"]: # Creates new patients randomly.
-            df.Hash_Ids(kout = "pid",indrnd = True)
-        else: # Series of ids for 'guaranteed' randomness.
-            df.index = df.index + rund["prvid"] + 1
-            df.Hash_Ids(kout = "pid",indrnd = False)
-        vret = df
-    elif vtyp == 2: # Status.
-        if rund["dfpid"] is not None: # Currently necessary.
-            dfdays = rund["dfdays"] # Pid should not be a key.
-            if not isinstance(dfdays,BmxFrame):
-                kday = "day"
-                dfdays = BmxFrame(dfdays,columns = [kday])
+    If forced, will not negate "bad" dict.
+    With saving, takes 1.5s for 50k words."""
+    Deb_Prtlog("Start convert dict",logging.DEBUG)
+    uti.St_Timer("TConvert")
+    from inpdict import goodd1, goodd2, badd1, badd2 # v
+    
+    tri1 = BNtrie()
+    tri2 = BNtrie()
+    tri1.build_dict(goodd1,True)
+    tri2.build_dict(goodd2,True)
+    if not indfrc:
+        tri1.build_dict(badd1,False)
+        tri2.build_dict(badd2,False)
+    
+    if indsave:
+        with open(BRANCH + BCKSLS + "tri1.pkl","wb") as flw:
+            pickle.dump(tri1,flw)
+        with open(BRANCH + BCKSLS + "tri2.pkl","wb") as flw:
+            pickle.dump(tri2,flw)
+    tdiff = uti.Ed_Timer("TConvert")
+    Deb_Prtlog(LOGMSG["dconvok"].format(tdiff),logging.DEBUG)
+    return (tri1,tri2)          
+
+def Load_Dict():
+    """Loads dictionaries from respective folders - files.
+    
+    Pick el pickle pickle."""
+    Deb_Prtlog("Start load dict",logging.DEBUG)
+    uti.St_Timer("TDload")
+    
+    with open(BRANCH + BCKSLS + "tri1.pkl","rb") as flr:
+        tri1 = pickle.load(flr)
+    with open(BRANCH + BCKSLS + "tri2.pkl","rb") as flr:
+        tri2 = pickle.load(flr)
+    tdiff = uti.Ed_Timer("TDload")
+    Deb_Prtlog(LOGMSG["dloadok"].format(tdiff),logging.DEBUG)
+    return (tri1,tri2)
+
+def Graph_Input():
+    """Graph input.
+    
+    Currently tailored for the game: 6/7x9 grid and value modifiers.
+    Prior input can be corrected using this format: *20 g,
+    with the actions + to add, / to remove, * to change.
+    Note - remove also grabs a placeholder parm.
+    Terminate with fin, end, quit or period.
+    Creep: Make generic by passing the print function parms (dict)."""
+    indstop = False
+    prmchg = None
+    tinp = []
+    while not indstop:
+        ursp = uti.Timed_Input(False,LOGMSG["grpinpmsg"],RSPTMO)
+        if len(re.findall(REINPEND,ursp.lower())) > 0: # Terminate after reading.
+            indstop = True
+            ursp = re.sub(REINPEND,"",ursp.lower())
+        cinp = re.split("[, ]",ursp)
+        cedit = []
+        for i,_ in enumerate(cinp):
+            if len(re.findall(RETILEPOS,cinp[i])) > 0:
+                # Loop could prolly be done a bit more elegantly.
+                if TILEADD in cinp[i]:
+                    prmchg = [1]
+                if TILEREM in cinp[i]:
+                    prmchg = [2]
+                if TILECHG in cinp[i]:
+                    prmchg = [3]
+                prmchg.append(int(re.sub(RETILEPOS,"",cinp[i])))
             else:
-                kday = dfdays.columns[0]
-            df = rund["dfpid"].Cross_Join(dfdays)
-            df["sttday"] = df.Rand_Norm(vstd = rund["sttday"],indint = True)
-            df["sttngt"] = df.Rand_Norm(vstd = rund["sttngt"],indint = True)
-            # Select entry & exit time at edges.
-            # Creep: Chance of none.
-            df["seed"] = df.Rand_Norm(indint = False) # Hours added or negated.
-            df["twake"] = (df[kday] +
-                            df.To_Time(rund["tmday"]) +
-                            df.Rand_Time(rund["uvar"]) -
-                            df.To_Time(rund["uvar"]) / 2)
-            df["tsleep"] = (df[kday] +
-                           df.To_Time(rund["tmngt"]) +
-                           df.Rand_Time(rund["uvar"]) -
-                           df.To_Time(rund["uvar"]) / 2)
-            df["lastrec"] = df["pid"] != df["pid"].shift(-1)
-            df["tnwake"] = df["twake"].shift(-1) # Used in random later.
-            df.loc[df["lastrec"],"tnwake"] = df["twake"] + pdu.DAY # Estimated.
-            # Periods in between ought to occupy a small fraction of the day.
-            # Method to get the exact quantity - diri distro with n + 1 items,
-            # such that the first n items represent start times (cumulative),
-            # and the +1 is the sleep / wake; then randomly set the break lengths.
-            # Crossjoin resets (wipes) keys, have to prepare them for expansion.
-            df.set_index(["pid",kday],inplace = True)
-            df["newrow"] = df["sttday"] + 1 
-            dfst1 = Status_Times(1,df,kday)
-            dfst2 = Status_Times(2,df,kday)
-            dfstat = pd.concat([dfst1,dfst2])
-            dfstat.sort_values(["pid",kday,"ostart"],inplace = True)
-            dfstat["lastrec"] = (dfstat["pid"] != dfstat["pid"].shift(-1))
-            # Day's end / beginning is expanded, up to next record.
-            # Inner wakings / rests still need to be filled with more records.
-            # Bools don't work with shift due to nans.
-            dfstat["nstart"] = dfstat["ostart"].shift(-1)
-            dfstat.loc[dfstat["lastrec2"],"oend"] = (
-                dfstat.loc[dfstat["lastrec2"],"nstart"])
-            dfstat.loc[dfstat["lastrec"],"oend"] = (
-                dfstat.loc[dfstat["lastrec"],"tnwake"])
-            dfstat.loc[dfstat["lastrec2"],"rdur"] = (
-                dfstat.loc[dfstat["lastrec2"],"oend"] -
-                dfstat.loc[dfstat["lastrec2"],"ostart"])
-            dfstat = dfstat.Period_Overlap(id = ["pid","ostatus"],tstart = "ostart",
-                                           tend = "oend",rdur = "rdur")
-                        
-            vret = BmxFrame(dfstat[GENRULER2])
-    return vret
+                if TILECURSE in cinp[i]:
+                    vtile = 1
+                elif TILEGOLD in cinp[i]:
+                    vtile = 2
+                else:
+                    vtile = 0
+                ctile = re.sub(RETILEVAL,"",cinp[i])
+                if prmchg is not None: # Alter a prior tile.
+                    if prmchg[0] == 1:
+                        tinp.insert(prmchg[1],(ctile,vtile))
+                    elif prmchg[0] == 2:
+                        tinp.pop(prmchg[1])
+                    elif prmchg[0] == 3:
+                        tinp[prmchg[1]] = (ctile,vtile)
+                else:
+                    cedit.append((ctile,vtile)) 
+        tinp.extend(cedit)
+        print(LOGMSG["grpprtmsg"])
+        Print_Hexagrid(tinp)
+            
+    return tinp
+
+def Print_Hexagrid(lval,rcnt = 6,ccnt = 9,indconvex = False):
+    """Print a 2 value list on a full hexagrid of some length.
+    
+    The colcount is normal, row count for leftmost col,
+    if convex will drop on even rows.
+    Visually fitted currently in a checkered pattern.
+    If the list is partially filled, prints column-row wise from top left."""
+    for ridx in range(rcnt):
+        for cidx in range(ccnt):
+            pass
+            #CONT
 
 # BM! MAIN()
 def Main_Test():
@@ -302,37 +442,19 @@ def Main_Test():
 #    tstdl = "http://upload.neopets.com/beauty/images/winners/silkmon-2012-05-11.jpg"
     while not indstop:
         if 1 != 0:
-            dfpid = Generate_Samples(1)
-            dfpid.Save_Frame("test_pid.csv")
-            dfstat = Generate_Samples(2,dfpid = dfpid)
-            dfstat.Save_Frame("test_stat.csv")
-#             imgdb.Kill_Cur(pendtop[1],False) # Locks db for update.
-# Compare req-selena.
-#             tsturl = r"https://archive.help-qa.com/history/few-replies//8"
-#             (verr,tmpbrw) = Req_Page(tsturl)
-#             htmlbod1 = tmpbrw.text
-#             uti.Write_UTF(BADHTML.format(1,1),htmlbod1,True)
-#             (verr,tmpbrw) = Selen_Page(tsturl,tslp=180)
-#             galena = tmpbrw
-#             htmlbod2 = tmpbrw.page_source
-#             uti.Write_UTF(BADHTML.format(1,2),htmlbod2,True)
-#             galena.quit()
-# Find test.
-#             tstt = Find_Loop_Repl("""One of you, "ladies'""","s{punc}",1, False, 0)
-#             print(tstt)
-# Dummy.
-#            verr = Build_Crawl(dbrefs,btc,ddl)
-#            verr = Build_List(dbrefs,lwin,ddl)
-#            verr = Build_List(dbrefs,lfail,ddl)
-#            verr = Grab_Webfile(tstdl)
-#            verr = Seize_Links(dbrefs)
-#             verr = Mine_Yeda(dbrefs,1)
-#             verr = Mine_List(dbrefs)
-#             verr = Build_Crawl(dbrefs,922,10)
-#             verr = Close_Dupe_Topics(dbrefs)
-#             verr = Read_All_Topics(dbrefs,pendtop)
-# Selects.
-#             verr = Review_Dbs(dbrefs,[1,2,3])
+            # Trie.
+            #tstrie = BNtrie()
+            #tstrie.build_dict(np.array(("ziggy","wino")))
+            #Convert_Dict()
+            #(tri1,tri2) = Load_Dict()
+            #print(list(tri1.refs["a"].refs["a"].refs["h"].refs["s"].refs.keys()))
+            #print(tri1.search("aardvark"))
+            
+            # Graph.
+            #groot = BNgraph(None)
+            #groot.build_hex([[10,20,30],[11,21,31,41],[12,22,32]])
+            Graph_Input()
+            
             print(verr)
             indstop = True # TEST
         else:
