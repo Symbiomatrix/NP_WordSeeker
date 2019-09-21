@@ -34,6 +34,10 @@ Bugs:
 Yes please.
 
 Version log:
+21/09/19 V1.1 Changed to prod, created main functions.
+                Major bugfix in create trie.
+                Added much needed reprint of input for copypastaing,
+                and minimised print during input to request (via qm keyword). 
 21/09/19 V1.0 Added trieversal, print hexagrid, score sort & print.
                 HANDLE WITH CARE.
 21/09/19 V0.6 Added trie and graph with input for both (mostly complete). 
@@ -43,7 +47,7 @@ Version log:
 """
 
 #BM! Devmode
-DEVMODE = True
+DEVMODE = False
 if DEVMODE: # DEV
 #     import Lite_CC_Exp # Using "import as" in optional clause shows warning in eclipse.
 #     ldb = Lite_CC_Exp
@@ -113,7 +117,7 @@ from collections import deque # v
 # from PyQt5 import QtCore, QtGui, QtWidgets # v
 
 # BM! Constants
-FMAIN = 1 # 1 = Location list. 2 = Employee range list. 3 = Unfiltered.
+FMAIN = 2 # 1 = Create dict trie. 2 = Looped word search.
 Deb_Prtlog = lambda x,y = logging.ERROR:uti.Deb_Prtlog(x,y,logger)
 LSTPH = uti.LSTPH
 REDELIM = "[, \n]" # Delims for free input.
@@ -135,13 +139,16 @@ HASHDEF = 8 # Number of digits.
 DEFDT = datetime.datetime(1971,1,1)
 TILEGOLD = "=" # These are faster to type than +*.
 TILECURSE = "-"
+TILEQM = "?"
 TILEADD = "+"
 TILEREM = "/"
 TILECHG = "*"
 # I'm using regex based string replacements.
 # Others aren't list based either, cept magicrep which needs a dict.
 RETILEPOS = BRKTEER.format(TILEADD + TILEREM + TILECHG)
+RETILEACT = BRKTEER.format(TILEQM)
 RETILEVAL = BRKTEER.format(TILEGOLD + TILECURSE)
+TILEVAL2 = (" " + TILEGOLD + TILECURSE,"012")
 SCLET = [("ADEGHILNORSTU".lower(),100),
          ("BCFKMPQVWY".lower(),200),
          ("JXZ".lower(),300)]
@@ -217,7 +224,7 @@ class BNtrie():
                 if indvalid is None: # Search is read only.
                     indstop = True
                     return False
-                elif not indvalid:
+                elif indvalid:
                     cnode.refs[chr1] = BNtrie(cnode)
                 else: # In negation mode will not create anything either.
                     indstop = True
@@ -388,6 +395,7 @@ class BNgraph():
             idx = idx + 1
             if idx >= maxvals or idx >= len(lscore):
                 indstop = True
+                
 
 def DebP_Curbod(curbod,htmlbod,windlen = 30):
     """Short segment for print around list markers in long text.
@@ -472,8 +480,9 @@ def Graph_Input():
     indstop = False
     prmchg = None
     tinp = []
+    print(LOGMSG["grpinpmsg"])
     while not indstop:
-        ursp = uti.Timed_Input(False,LOGMSG["grpinpmsg"],RSPTMO)
+        ursp = uti.Timed_Input(False,"",RSPTMO)
         if len(re.findall(REINPEND,ursp.lower())) > 0: # Terminate after reading.
             indstop = True
             ursp = re.sub(REINPEND,"",ursp.lower())
@@ -489,6 +498,11 @@ def Graph_Input():
                 if TILECHG in cinp[i]:
                     prmchg = [3]
                 prmchg.append(int(re.sub(RETILEPOS,"",cinp[i])))
+            elif len(re.findall(RETILEACT,cinp[i])) > 0:
+                if TILEQM in cinp[i]:
+                    print(LOGMSG["grpinpmsg"])
+                    print(LOGMSG["grpprtmsg"])
+                    Print_Hexagrid(tinp)
             elif len(cinp[i]) > 0:
                 if TILECURSE in cinp[i]:
                     vtile = 1
@@ -507,8 +521,6 @@ def Graph_Input():
                 else:
                     cedit.append((ctile,vtile)) 
         tinp.extend(cedit)
-        print(LOGMSG["grpprtmsg"])
-        Print_Hexagrid(tinp)
             
     return tinp
 
@@ -570,6 +582,16 @@ def Print_Hexagrid(lval,rcnt = 6,ccnt = 9,indconvex = False):
             else:
                 lrow.append(" | ")
         print("".join(lrow))
+
+def Print_Format(lval):
+    """Prints L2 in an easy to edit mode.
+    
+    Spam."""
+    for l1 in lval:
+        for l2 in l1:
+            print("".join(uti.Multirep(str(k),TILEVAL2[1],TILEVAL2[0])
+                          for k in l2),end = " ")
+        print()
 
 # BM! MAIN()
 def Main_Test():
@@ -655,8 +677,24 @@ def Main():
     
     verr = 0
 #     dbrefs = Init_Parms()
-    if FMAIN in (1,2,3,9):
-#         verr = Mine_Yeda(dbrefs,FMAIN)
+    if FMAIN == 1:
+        Convert_Dict()
+    if FMAIN == 2:
+        (tri1,tri2) = Load_Dict()
+        while True:
+            groot = BNgraph(None)
+            gi = Graph_Input()
+            gi = Hexify(gi)
+            groot.build_hex(gi)
+            potword = groot.trieverse(tri1,tri2)
+            (dang,optim) = groot.Word_Score(potword)
+            print("Topmost score:")
+            groot.Print_Scores(dang)
+            print("Topmost danger:")
+            groot.Print_Scores(optim)
+            print("---------------------")
+            Print_Format(gi)
+            
         verr = 0
     elif FMAIN == 8:
 #         verr = Mine_List(dbrefs)
