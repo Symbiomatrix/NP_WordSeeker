@@ -10,6 +10,7 @@ Bad is ignored (safekeeping unless forced), np is favourable.
 Version 1, 2019/09/20 15:00 - Initial.
 """
 
+
 import numpy as np
 import utils as uti
 
