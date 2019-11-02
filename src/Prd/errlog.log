@@ -1,0 +1,513 @@
+2019-09-21 20:00:45,285 DEBUG:__main__:Start main
+2019-09-21 20:00:45,285 DEBUG:__main__:Start load dict
+2019-09-21 20:02:46,848 DEBUG:__main__:Start main
+2019-09-21 20:02:46,849 DEBUG:__main__:Start convert dict
+2019-09-21 20:02:47,296 DEBUG:__main__:Conversion completed in 0:00:00.446026 .
+2019-09-21 20:02:47,297 DEBUG:__main__:End main 0:00:00.446026
+2019-09-21 20:02:52,365 DEBUG:__main__:Start main
+2019-09-21 20:02:52,365 DEBUG:__main__:Start load dict
+2019-09-21 20:02:52,370 DEBUG:__main__:Load completed in 0:00:00.005000 .
+2019-09-21 20:03:51,965 DEBUG:__main__:Start trieverse
+2019-09-21 20:05:00,715 DEBUG:__main__:Start main
+2019-09-21 20:05:03,783 DEBUG:__main__:Start convert dict
+2019-09-21 20:07:21,772 DEBUG:__main__:Start main
+2019-09-21 20:07:21,772 DEBUG:__main__:Start convert dict
+2019-09-21 20:07:23,698 DEBUG:__main__:Conversion completed in 0:00:01.926110 .
+2019-09-21 20:07:23,698 DEBUG:__main__:End main 0:00:01.926110
+2019-09-21 20:08:11,470 DEBUG:__main__:Start main
+2019-09-21 20:08:11,471 DEBUG:__main__:Start load dict
+2019-09-21 20:08:12,603 DEBUG:__main__:Load completed in 0:00:01.132065 .
+2019-09-21 20:09:09,455 DEBUG:__main__:Start trieverse
+2019-09-21 20:09:09,463 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-21 20:11:34,573 DEBUG:__main__:Start trieverse
+2019-09-21 20:11:34,591 DEBUG:__main__:Completed trieversal in 0:00:00.017001 .
+2019-09-21 20:13:33,818 DEBUG:__main__:Start trieverse
+2019-09-21 20:13:33,827 DEBUG:__main__:Completed trieversal in 0:00:00.008000 .
+2019-09-21 20:15:45,101 DEBUG:__main__:Start trieverse
+2019-09-21 20:15:45,120 DEBUG:__main__:Completed trieversal in 0:00:00.019001 .
+2019-09-21 20:19:10,732 DEBUG:__main__:Start trieverse
+2019-09-21 20:19:10,740 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-21 20:21:25,101 DEBUG:__main__:Start trieverse
+2019-09-21 20:21:25,119 DEBUG:__main__:Completed trieversal in 0:00:00.016001 .
+2019-09-21 20:24:13,019 DEBUG:__main__:Start trieverse
+2019-09-21 20:24:13,024 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-21 20:25:24,302 DEBUG:__main__:Start trieverse
+2019-09-21 20:25:24,312 DEBUG:__main__:Completed trieversal in 0:00:00.009001 .
+2019-09-21 20:28:00,593 DEBUG:__main__:Start trieverse
+2019-09-21 20:28:00,599 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-21 20:29:20,338 DEBUG:__main__:Start trieverse
+2019-09-21 20:29:20,343 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-09-21 20:37:36,072 DEBUG:__main__:Start main
+2019-09-21 20:37:36,073 DEBUG:__main__:Start load dict
+2019-09-21 20:37:37,042 DEBUG:__main__:Load completed in 0:00:00.969055 .
+2019-09-21 20:37:44,624 DEBUG:__main__:Start trieverse
+2019-09-21 20:37:44,644 DEBUG:__main__:Completed trieversal in 0:00:00.019001 .
+2019-09-21 20:38:17,599 DEBUG:__main__:Start main
+2019-09-21 20:38:17,599 DEBUG:__main__:Start load dict
+2019-09-21 20:38:18,556 DEBUG:__main__:Load completed in 0:00:00.957055 .
+2019-09-21 20:38:21,382 DEBUG:__main__:Start trieverse
+2019-09-21 20:38:21,399 DEBUG:__main__:Completed trieversal in 0:00:00.015001 .
+2019-09-21 20:41:07,315 DEBUG:__main__:Start main
+2019-09-21 20:41:07,315 DEBUG:__main__:Start load dict
+2019-09-21 20:41:08,250 DEBUG:__main__:Load completed in 0:00:00.934054 .
+2019-09-21 20:41:09,216 DEBUG:__main__:Start trieverse
+2019-09-21 20:41:15,872 DEBUG:__main__:Start main
+2019-09-21 20:41:15,872 DEBUG:__main__:Start load dict
+2019-09-21 20:41:16,845 DEBUG:__main__:Load completed in 0:00:00.973055 .
+2019-09-21 20:41:21,859 DEBUG:__main__:Start trieverse
+2019-09-21 20:41:21,877 DEBUG:__main__:Completed trieversal in 0:00:00.017001 .
+2019-09-21 20:41:54,838 DEBUG:__main__:Start main
+2019-09-21 20:41:54,839 DEBUG:__main__:Start load dict
+2019-09-21 20:41:55,799 DEBUG:__main__:Load completed in 0:00:00.960055 .
+2019-09-21 20:41:58,885 DEBUG:__main__:Start trieverse
+2019-09-21 20:41:58,902 DEBUG:__main__:Completed trieversal in 0:00:00.017001 .
+2019-09-21 20:49:08,122 DEBUG:__main__:Start main
+2019-09-21 20:49:08,123 DEBUG:__main__:Start load dict
+2019-09-21 20:49:09,092 DEBUG:__main__:Load completed in 0:00:00.969055 .
+2019-09-21 20:49:15,558 DEBUG:__main__:Start main
+2019-09-21 20:49:15,558 DEBUG:__main__:Start load dict
+2019-09-21 20:49:16,525 DEBUG:__main__:Load completed in 0:00:00.967055 .
+2019-09-21 20:49:31,824 DEBUG:__main__:Start trieverse
+2019-09-21 20:49:31,843 DEBUG:__main__:Completed trieversal in 0:00:00.018002 .
+2019-09-21 20:49:45,182 DEBUG:__main__:Start main
+2019-09-21 20:49:45,182 DEBUG:__main__:Start load dict
+2019-09-21 20:49:46,161 DEBUG:__main__:Load completed in 0:00:00.979056 .
+2019-09-21 20:49:48,328 DEBUG:__main__:Start trieverse
+2019-09-21 20:49:48,347 DEBUG:__main__:Completed trieversal in 0:00:00.019001 .
+2019-09-21 22:08:59,305 DEBUG:__main__:Start main
+2019-09-21 22:08:59,306 DEBUG:__main__:Start load dict
+2019-09-21 22:09:00,302 DEBUG:__main__:Load completed in 0:00:00.996057 .
+2019-09-21 22:10:21,042 DEBUG:__main__:Start main
+2019-09-21 22:10:21,042 DEBUG:__main__:Start load dict
+2019-09-21 22:10:22,037 DEBUG:__main__:Load completed in 0:00:00.995057 .
+2019-09-21 22:11:39,284 DEBUG:__main__:Start trieverse
+2019-09-21 22:11:39,302 DEBUG:__main__:Completed trieversal in 0:00:00.017001 .
+2019-09-21 22:12:04,186 DEBUG:__main__:Start trieverse
+2019-09-21 22:12:04,202 DEBUG:__main__:Completed trieversal in 0:00:00.014001 .
+2019-09-21 22:15:37,047 DEBUG:__main__:Start main
+2019-09-21 22:15:37,047 DEBUG:__main__:Start load dict
+2019-09-21 22:15:38,012 DEBUG:__main__:Load completed in 0:00:00.965055 .
+2019-09-21 22:32:55,397 DEBUG:__main__:Start main
+2019-09-21 22:32:55,397 DEBUG:__main__:Start load dict
+2019-09-21 22:32:56,328 DEBUG:__main__:Load completed in 0:00:00.930053 .
+2019-09-21 22:34:40,327 DEBUG:__main__:Start main
+2019-09-21 22:34:40,327 DEBUG:__main__:Start load dict
+2019-09-21 22:34:41,322 DEBUG:__main__:Load completed in 0:00:00.994057 .
+2019-09-21 22:37:10,735 DEBUG:__main__:Start main
+2019-09-21 22:37:10,735 DEBUG:__main__:Start load dict
+2019-09-21 22:37:11,743 DEBUG:__main__:Load completed in 0:00:01.008058 .
+2019-09-21 23:31:04,642 DEBUG:__main__:Start main
+2019-09-21 23:31:04,643 DEBUG:__main__:Start load dict
+2019-09-21 23:31:05,648 DEBUG:__main__:Load completed in 0:00:01.005057 .
+2019-09-22 00:03:20,842 DEBUG:__main__:Start main
+2019-09-22 00:03:20,842 DEBUG:__main__:Start load dict
+2019-09-22 00:03:21,964 DEBUG:__main__:Load completed in 0:00:01.122002 .
+2019-09-22 00:04:28,072 DEBUG:__main__:Start trieverse
+2019-09-22 00:04:28,072 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 00:08:11,685 DEBUG:__main__:Start trieverse
+2019-09-22 00:08:11,685 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 00:09:36,055 DEBUG:__main__:Start main
+2019-09-22 00:09:36,055 DEBUG:__main__:Start load dict
+2019-09-22 00:09:37,175 DEBUG:__main__:Load completed in 0:00:01.120002 .
+2019-09-22 00:09:43,107 DEBUG:__main__:Start trieverse
+2019-09-22 00:09:43,107 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 00:10:41,378 DEBUG:__main__:Start trieverse
+2019-09-22 00:10:41,398 DEBUG:__main__:Completed trieversal in 0:00:00.020000 .
+2019-09-22 00:12:45,535 DEBUG:__main__:Start trieverse
+2019-09-22 00:12:45,545 DEBUG:__main__:Completed trieversal in 0:00:00.010001 .
+2019-09-22 00:14:18,531 DEBUG:__main__:Start trieverse
+2019-09-22 00:14:18,541 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:26:10,656 DEBUG:__main__:Start trieverse
+2019-09-22 00:26:10,666 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:28:39,328 DEBUG:__main__:Start main
+2019-09-22 00:28:39,328 DEBUG:__main__:Start load dict
+2019-09-22 00:28:40,418 DEBUG:__main__:Load completed in 0:00:01.090002 .
+2019-09-22 00:28:55,932 DEBUG:__main__:Start trieverse
+2019-09-22 00:28:55,950 DEBUG:__main__:Completed trieversal in 0:00:00.017001 .
+2019-09-22 00:30:57,768 DEBUG:__main__:Start trieverse
+2019-09-22 00:30:57,778 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:32:36,648 DEBUG:__main__:Start trieverse
+2019-09-22 00:32:36,658 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:33:47,674 DEBUG:__main__:Start trieverse
+2019-09-22 00:33:47,684 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:35:38,625 DEBUG:__main__:Start trieverse
+2019-09-22 00:35:38,635 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:37:18,746 DEBUG:__main__:Start trieverse
+2019-09-22 00:37:18,756 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:39:25,827 DEBUG:__main__:Start trieverse
+2019-09-22 00:39:25,827 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 00:40:58,918 DEBUG:__main__:Start trieverse
+2019-09-22 00:40:58,918 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 00:42:12,884 DEBUG:__main__:Start trieverse
+2019-09-22 00:42:12,894 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:43:58,576 DEBUG:__main__:Start trieverse
+2019-09-22 00:43:58,586 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:46:03,629 DEBUG:__main__:Start trieverse
+2019-09-22 00:46:03,639 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:47:33,029 DEBUG:__main__:Start trieverse
+2019-09-22 00:47:33,039 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:48:49,686 DEBUG:__main__:Start trieverse
+2019-09-22 00:48:49,686 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 00:50:01,824 DEBUG:__main__:Start trieverse
+2019-09-22 00:50:01,834 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:50:55,301 DEBUG:__main__:Start trieverse
+2019-09-22 00:50:55,311 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:51:46,905 DEBUG:__main__:Start trieverse
+2019-09-22 00:51:46,915 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:53:01,295 DEBUG:__main__:Start trieverse
+2019-09-22 00:53:01,305 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:54:13,304 DEBUG:__main__:Start trieverse
+2019-09-22 00:54:13,324 DEBUG:__main__:Completed trieversal in 0:00:00.020000 .
+2019-09-22 00:56:08,872 DEBUG:__main__:Start trieverse
+2019-09-22 00:56:08,882 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 00:57:53,764 DEBUG:__main__:Start trieverse
+2019-09-22 00:57:53,764 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 00:59:43,096 DEBUG:__main__:Start trieverse
+2019-09-22 00:59:43,106 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 01:01:09,549 DEBUG:__main__:Start trieverse
+2019-09-22 01:01:09,559 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 01:02:28,010 DEBUG:__main__:Start trieverse
+2019-09-22 01:02:28,020 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 01:03:51,453 DEBUG:__main__:Start trieverse
+2019-09-22 01:03:51,463 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 01:05:34,701 DEBUG:__main__:Start trieverse
+2019-09-22 01:05:34,711 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 01:06:30,997 DEBUG:__main__:Start trieverse
+2019-09-22 01:06:31,007 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 01:55:26,012 DEBUG:__main__:Start main
+2019-09-22 01:55:26,012 DEBUG:__main__:Start load dict
+2019-09-22 01:55:27,495 DEBUG:__main__:Load completed in 0:00:01.483003 .
+2019-09-22 01:56:05,285 DEBUG:__main__:Start trieverse
+2019-09-22 01:56:05,295 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 01:58:06,548 DEBUG:__main__:Start trieverse
+2019-09-22 01:58:06,558 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 01:59:19,986 DEBUG:__main__:Start trieverse
+2019-09-22 01:59:19,996 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 02:00:35,532 DEBUG:__main__:Start trieverse
+2019-09-22 02:00:35,532 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 02:02:32,728 DEBUG:__main__:Start trieverse
+2019-09-22 02:02:32,728 DEBUG:__main__:Completed trieversal in 0:00:00 .
+2019-09-22 02:04:27,144 DEBUG:__main__:Start trieverse
+2019-09-22 02:04:27,154 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-22 02:07:19,020 DEBUG:__main__:Start trieverse
+2019-09-22 02:07:19,026 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-22 02:08:25,155 DEBUG:__main__:Start trieverse
+2019-09-22 02:08:25,160 DEBUG:__main__:Completed trieversal in 0:00:00.004001 .
+2019-09-22 02:09:29,331 DEBUG:__main__:Start trieverse
+2019-09-22 02:09:29,336 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-22 21:54:56,010 DEBUG:__main__:Start main
+2019-09-22 21:54:56,010 DEBUG:__main__:Start load dict
+2019-09-22 21:54:57,234 DEBUG:__main__:Load completed in 0:00:01.224070 .
+2019-09-22 21:55:35,055 DEBUG:__main__:Start trieverse
+2019-09-22 21:55:35,063 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-22 22:03:16,844 DEBUG:__main__:Start trieverse
+2019-09-22 22:03:16,849 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-22 22:08:11,884 DEBUG:__main__:Start trieverse
+2019-09-22 22:08:11,889 DEBUG:__main__:Completed trieversal in 0:00:00.004001 .
+2019-09-22 22:09:46,453 DEBUG:__main__:Start trieverse
+2019-09-22 22:09:46,458 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-09-22 22:12:59,345 DEBUG:__main__:Start trieverse
+2019-09-22 22:12:59,350 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-22 22:14:59,164 DEBUG:__main__:Start trieverse
+2019-09-22 22:14:59,169 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-09-22 22:16:26,005 DEBUG:__main__:Start trieverse
+2019-09-22 22:16:26,010 DEBUG:__main__:Completed trieversal in 0:00:00.004001 .
+2019-09-22 22:22:22,557 DEBUG:__main__:Start trieverse
+2019-09-22 22:22:22,562 DEBUG:__main__:Completed trieversal in 0:00:00.003000 .
+2019-09-22 22:24:16,477 DEBUG:__main__:Start trieverse
+2019-09-22 22:24:16,481 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-22 22:25:38,824 DEBUG:__main__:Start trieverse
+2019-09-22 22:25:38,829 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-22 22:27:53,931 DEBUG:__main__:Start trieverse
+2019-09-22 22:27:53,937 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-22 22:31:05,279 DEBUG:__main__:Start trieverse
+2019-09-22 22:31:05,285 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-22 22:32:23,384 DEBUG:__main__:Start trieverse
+2019-09-22 22:32:23,391 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 06:33:54,994 DEBUG:__main__:Start main
+2019-09-24 06:33:55,001 DEBUG:__main__:Start load dict
+2019-09-24 06:33:57,673 DEBUG:__main__:Load completed in 0:00:02.671153 .
+2019-09-24 06:34:55,388 DEBUG:__main__:Start trieverse
+2019-09-24 06:34:55,402 DEBUG:__main__:Completed trieversal in 0:00:00.013000 .
+2019-09-24 06:37:18,629 DEBUG:__main__:Start trieverse
+2019-09-24 06:37:18,645 DEBUG:__main__:Completed trieversal in 0:00:00.013000 .
+2019-09-24 06:38:56,294 DEBUG:__main__:Start trieverse
+2019-09-24 06:38:56,308 DEBUG:__main__:Completed trieversal in 0:00:00.014000 .
+2019-09-24 06:40:38,987 DEBUG:__main__:Start trieverse
+2019-09-24 06:40:38,997 DEBUG:__main__:Completed trieversal in 0:00:00.009001 .
+2019-09-24 06:42:19,023 DEBUG:__main__:Start trieverse
+2019-09-24 06:42:19,033 DEBUG:__main__:Completed trieversal in 0:00:00.009001 .
+2019-09-24 06:44:38,354 DEBUG:__main__:Start trieverse
+2019-09-24 06:44:38,360 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 06:46:08,863 DEBUG:__main__:Start trieverse
+2019-09-24 06:46:08,872 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 06:48:13,866 DEBUG:__main__:Start trieverse
+2019-09-24 06:48:13,871 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 06:49:12,585 DEBUG:__main__:Start trieverse
+2019-09-24 06:49:12,589 DEBUG:__main__:Completed trieversal in 0:00:00.003000 .
+2019-09-24 06:51:07,162 DEBUG:__main__:Start trieverse
+2019-09-24 06:51:07,168 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 06:52:42,130 DEBUG:__main__:Start trieverse
+2019-09-24 06:52:42,136 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 06:54:40,501 DEBUG:__main__:Start trieverse
+2019-09-24 06:54:40,506 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 06:56:29,990 DEBUG:__main__:Start trieverse
+2019-09-24 06:56:29,995 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 06:56:49,475 DEBUG:__main__:Start trieverse
+2019-09-24 06:56:49,481 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 06:58:19,933 DEBUG:__main__:Start trieverse
+2019-09-24 06:58:19,940 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-24 07:00:40,208 DEBUG:__main__:Start trieverse
+2019-09-24 07:00:40,215 DEBUG:__main__:Completed trieversal in 0:00:00.007001 .
+2019-09-24 07:02:23,127 DEBUG:__main__:Start trieverse
+2019-09-24 07:02:23,136 DEBUG:__main__:Completed trieversal in 0:00:00.008000 .
+2019-09-24 07:03:43,093 DEBUG:__main__:Start trieverse
+2019-09-24 07:03:43,098 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 07:06:20,303 DEBUG:__main__:Start trieverse
+2019-09-24 07:06:20,312 DEBUG:__main__:Completed trieversal in 0:00:00.008000 .
+2019-09-24 07:09:43,985 DEBUG:__main__:Start trieverse
+2019-09-24 07:09:43,990 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 07:12:38,125 DEBUG:__main__:Start trieverse
+2019-09-24 07:12:38,132 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 07:32:55,632 DEBUG:__main__:Start main
+2019-09-24 07:32:55,632 DEBUG:__main__:Start load dict
+2019-09-24 07:32:56,753 DEBUG:__main__:Load completed in 0:00:01.121064 .
+2019-09-24 07:33:27,675 DEBUG:__main__:Start trieverse
+2019-09-24 07:33:27,679 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 07:34:40,088 DEBUG:__main__:Start trieverse
+2019-09-24 07:34:40,093 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 07:36:49,463 DEBUG:__main__:Start trieverse
+2019-09-24 07:36:49,479 DEBUG:__main__:Completed trieversal in 0:00:00.016001 .
+2019-09-24 07:38:52,620 DEBUG:__main__:Start trieverse
+2019-09-24 07:38:52,626 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 07:40:20,919 DEBUG:__main__:Start trieverse
+2019-09-24 07:40:20,924 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 07:42:11,865 DEBUG:__main__:Start trieverse
+2019-09-24 07:42:11,886 DEBUG:__main__:Completed trieversal in 0:00:00.020001 .
+2019-09-24 07:44:23,608 DEBUG:__main__:Start trieverse
+2019-09-24 07:44:23,617 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 07:46:24,342 DEBUG:__main__:Start trieverse
+2019-09-24 07:46:24,364 DEBUG:__main__:Completed trieversal in 0:00:00.021001 .
+2019-09-24 07:47:48,708 DEBUG:__main__:Start trieverse
+2019-09-24 07:47:48,727 DEBUG:__main__:Completed trieversal in 0:00:00.019001 .
+2019-09-24 07:48:59,527 DEBUG:__main__:Start trieverse
+2019-09-24 07:48:59,536 DEBUG:__main__:Completed trieversal in 0:00:00.009000 .
+2019-09-24 07:49:15,632 DEBUG:__main__:Start main
+2019-09-24 07:49:15,632 DEBUG:__main__:Start load dict
+2019-09-24 07:49:16,698 DEBUG:__main__:Load completed in 0:00:01.066061 .
+2019-09-24 07:49:28,810 DEBUG:__main__:Start trieverse
+2019-09-24 07:49:28,814 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 07:50:23,877 DEBUG:__main__:Start trieverse
+2019-09-24 07:50:23,882 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-09-24 07:51:05,605 DEBUG:__main__:Start trieverse
+2019-09-24 07:51:05,614 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 07:52:47,695 DEBUG:__main__:Start trieverse
+2019-09-24 07:52:47,713 DEBUG:__main__:Completed trieversal in 0:00:00.018001 .
+2019-09-24 07:53:23,855 DEBUG:__main__:Start trieverse
+2019-09-24 07:53:23,861 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 07:54:06,059 DEBUG:__main__:Start trieverse
+2019-09-24 07:54:06,078 DEBUG:__main__:Completed trieversal in 0:00:00.017001 .
+2019-09-24 07:55:44,109 DEBUG:__main__:Start trieverse
+2019-09-24 07:55:44,117 DEBUG:__main__:Completed trieversal in 0:00:00.008000 .
+2019-09-24 07:57:09,585 DEBUG:__main__:Start trieverse
+2019-09-24 07:57:09,595 DEBUG:__main__:Completed trieversal in 0:00:00.009000 .
+2019-09-24 07:57:59,584 DEBUG:__main__:Start trieverse
+2019-09-24 07:57:59,591 DEBUG:__main__:Completed trieversal in 0:00:00.007001 .
+2019-09-24 07:59:09,863 DEBUG:__main__:Start trieverse
+2019-09-24 07:59:09,871 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 08:00:16,861 DEBUG:__main__:Start trieverse
+2019-09-24 08:00:16,866 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 08:01:38,051 DEBUG:__main__:Start trieverse
+2019-09-24 08:01:38,074 DEBUG:__main__:Completed trieversal in 0:00:00.022001 .
+2019-09-24 08:02:29,807 DEBUG:__main__:Start trieverse
+2019-09-24 08:02:29,815 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 08:03:45,364 DEBUG:__main__:Start trieverse
+2019-09-24 08:03:45,373 DEBUG:__main__:Completed trieversal in 0:00:00.009000 .
+2019-09-24 08:06:05,849 DEBUG:__main__:Start trieverse
+2019-09-24 08:06:05,857 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 08:08:12,168 DEBUG:__main__:Start trieverse
+2019-09-24 08:08:12,176 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 08:10:04,041 DEBUG:__main__:Start trieverse
+2019-09-24 08:10:04,048 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 08:11:08,052 DEBUG:__main__:Start trieverse
+2019-09-24 08:11:08,061 DEBUG:__main__:Completed trieversal in 0:00:00.009001 .
+2019-09-24 22:27:51,249 DEBUG:__main__:Start main
+2019-09-24 22:27:51,249 DEBUG:__main__:Start load dict
+2019-09-24 22:27:52,405 DEBUG:__main__:Load completed in 0:00:01.155066 .
+2019-09-24 22:28:24,421 DEBUG:__main__:Start trieverse
+2019-09-24 22:28:24,430 DEBUG:__main__:Completed trieversal in 0:00:00.009001 .
+2019-09-24 22:29:37,364 DEBUG:__main__:Start trieverse
+2019-09-24 22:29:37,371 DEBUG:__main__:Completed trieversal in 0:00:00.007001 .
+2019-09-24 22:31:03,055 DEBUG:__main__:Start trieverse
+2019-09-24 22:31:03,061 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 22:32:42,466 DEBUG:__main__:Start trieverse
+2019-09-24 22:32:42,472 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 22:34:30,164 DEBUG:__main__:Start trieverse
+2019-09-24 22:34:30,171 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 22:36:36,955 DEBUG:__main__:Start trieverse
+2019-09-24 22:36:36,962 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-24 22:39:16,621 DEBUG:__main__:Start trieverse
+2019-09-24 22:39:16,627 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 22:41:11,947 DEBUG:__main__:Start trieverse
+2019-09-24 22:41:11,955 DEBUG:__main__:Completed trieversal in 0:00:00.008001 .
+2019-09-24 22:43:18,190 DEBUG:__main__:Start trieverse
+2019-09-24 22:43:18,198 DEBUG:__main__:Completed trieversal in 0:00:00.008000 .
+2019-09-24 22:45:04,084 DEBUG:__main__:Start trieverse
+2019-09-24 22:45:04,090 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 22:46:10,878 DEBUG:__main__:Start trieverse
+2019-09-24 22:46:10,885 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-24 22:47:39,405 DEBUG:__main__:Start trieverse
+2019-09-24 22:47:39,411 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 22:49:38,384 DEBUG:__main__:Start trieverse
+2019-09-24 22:49:38,390 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 22:51:24,568 DEBUG:__main__:Start trieverse
+2019-09-24 22:51:24,573 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 22:53:04,182 DEBUG:__main__:Start trieverse
+2019-09-24 22:53:04,187 DEBUG:__main__:Completed trieversal in 0:00:00.005000 .
+2019-09-24 22:54:59,786 DEBUG:__main__:Start trieverse
+2019-09-24 22:54:59,794 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-24 22:57:15,924 DEBUG:__main__:Start trieverse
+2019-09-24 22:57:15,929 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-09-24 22:58:54,678 DEBUG:__main__:Start trieverse
+2019-09-24 22:58:54,686 DEBUG:__main__:Completed trieversal in 0:00:00.008000 .
+2019-09-24 23:01:31,864 DEBUG:__main__:Start trieverse
+2019-09-24 23:01:31,871 DEBUG:__main__:Completed trieversal in 0:00:00.007001 .
+2019-09-24 23:05:49,857 DEBUG:__main__:Start trieverse
+2019-09-24 23:05:49,868 DEBUG:__main__:Completed trieversal in 0:00:00.010000 .
+2019-09-24 23:08:24,639 DEBUG:__main__:Start trieverse
+2019-09-24 23:08:24,646 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-24 23:09:37,208 DEBUG:__main__:Start trieverse
+2019-09-24 23:09:37,214 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 23:12:08,454 DEBUG:__main__:Start trieverse
+2019-09-24 23:12:08,460 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 23:13:33,381 DEBUG:__main__:Start trieverse
+2019-09-24 23:13:33,385 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 23:15:18,251 DEBUG:__main__:Start trieverse
+2019-09-24 23:15:18,255 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 23:16:34,600 DEBUG:__main__:Start trieverse
+2019-09-24 23:16:34,606 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 23:17:55,903 DEBUG:__main__:Start trieverse
+2019-09-24 23:17:55,909 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 23:19:14,591 DEBUG:__main__:Start trieverse
+2019-09-24 23:19:14,597 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 23:20:33,009 DEBUG:__main__:Start trieverse
+2019-09-24 23:20:33,015 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 23:23:17,594 DEBUG:__main__:Start trieverse
+2019-09-24 23:23:17,600 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 23:24:47,297 DEBUG:__main__:Start trieverse
+2019-09-24 23:24:47,303 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 23:27:53,609 DEBUG:__main__:Start trieverse
+2019-09-24 23:27:53,616 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-24 23:29:51,671 DEBUG:__main__:Start trieverse
+2019-09-24 23:29:51,679 DEBUG:__main__:Completed trieversal in 0:00:00.008000 .
+2019-09-24 23:31:47,358 DEBUG:__main__:Start trieverse
+2019-09-24 23:31:47,364 DEBUG:__main__:Completed trieversal in 0:00:00.006000 .
+2019-09-24 23:32:48,176 DEBUG:__main__:Start trieverse
+2019-09-24 23:32:48,181 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-09-24 23:37:02,086 DEBUG:__main__:Start trieverse
+2019-09-24 23:37:02,090 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 23:38:58,674 DEBUG:__main__:Start trieverse
+2019-09-24 23:38:58,679 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 23:41:23,003 DEBUG:__main__:Start trieverse
+2019-09-24 23:41:23,015 DEBUG:__main__:Completed trieversal in 0:00:00.012000 .
+2019-09-24 23:43:07,297 DEBUG:__main__:Start trieverse
+2019-09-24 23:43:07,301 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 23:44:15,697 DEBUG:__main__:Start trieverse
+2019-09-24 23:44:15,703 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 23:45:34,348 DEBUG:__main__:Start trieverse
+2019-09-24 23:45:34,353 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 23:46:45,719 DEBUG:__main__:Start trieverse
+2019-09-24 23:46:45,730 DEBUG:__main__:Completed trieversal in 0:00:00.010001 .
+2019-09-24 23:48:20,605 DEBUG:__main__:Start trieverse
+2019-09-24 23:48:20,611 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 23:49:35,925 DEBUG:__main__:Start trieverse
+2019-09-24 23:49:35,930 DEBUG:__main__:Completed trieversal in 0:00:00.003000 .
+2019-09-24 23:51:04,536 DEBUG:__main__:Start trieverse
+2019-09-24 23:51:04,547 DEBUG:__main__:Completed trieversal in 0:00:00.011001 .
+2019-09-24 23:52:57,955 DEBUG:__main__:Start trieverse
+2019-09-24 23:52:57,962 DEBUG:__main__:Completed trieversal in 0:00:00.007000 .
+2019-09-24 23:55:12,770 DEBUG:__main__:Start trieverse
+2019-09-24 23:55:12,775 DEBUG:__main__:Completed trieversal in 0:00:00.004000 .
+2019-09-24 23:56:23,641 DEBUG:__main__:Start trieverse
+2019-09-24 23:56:23,647 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-09-24 23:57:28,192 DEBUG:__main__:Start trieverse
+2019-09-24 23:57:28,198 DEBUG:__main__:Completed trieversal in 0:00:00.006001 .
+2019-09-24 23:58:58,232 DEBUG:__main__:Start trieverse
+2019-09-24 23:58:58,237 DEBUG:__main__:Completed trieversal in 0:00:00.005001 .
+2019-10-29 06:02:51,057 DEBUG:__main__:Start Main_FT
+2019-10-29 06:02:51,303 DEBUG:__main__:End Main_FT
+2019-10-29 18:02:34,710 DEBUG:__main__:Start form creator
+2019-10-29 18:02:34,888 DEBUG:__main__:End form creator
+2019-10-30 03:51:59,350 DEBUG:__main__:Start form creator
+2019-10-30 03:51:59,662 DEBUG:__main__:End form creator
+2019-10-30 05:04:18,038 ERROR:utils:Error in gui: Func Clear_Details, class AttributeError ("'MainApp' object has no attribute 'txtSeries'",)
+2019-10-30 05:04:41,466 ERROR:utils:Error in gui: Func Clear_Details, class AttributeError ("'MainApp' object has no attribute 'txtSeries'",)
+2019-10-30 05:05:14,837 ERROR:utils:Error in gui: Func Clear_Details, class AttributeError ("'MainApp' object has no attribute 'txtSeries'",)
+2019-11-01 01:41:01,252 DEBUG:__main__:Start form creator
+2019-11-01 01:41:01,551 DEBUG:__main__:End form creator
+2019-11-01 04:25:55,860 DEBUG:__main__:Start main
+2019-11-01 04:25:55,860 DEBUG:__main__:Start init parms
+2019-11-01 04:25:56,210 DEBUG:__main__:Start main screen init
+2019-11-01 04:25:57,593 DEBUG:__main__:End main 0:00:01.733099
+2019-11-01 04:27:35,865 DEBUG:__main__:Start main
+2019-11-01 04:27:35,866 DEBUG:__main__:Start init parms
+2019-11-01 04:27:36,213 DEBUG:__main__:Start main screen init
+2019-11-01 04:27:40,339 DEBUG:__main__:End main 0:00:01.917110
+2019-11-01 04:48:35,346 DEBUG:__main__:Start main
+2019-11-01 04:48:35,346 DEBUG:__main__:Start init parms
+2019-11-01 04:48:35,703 DEBUG:__main__:Start main screen init
+2019-11-01 04:48:38,231 DEBUG:__main__:End main 0:00:02.885165
+2019-11-01 04:53:54,458 DEBUG:__main__:Start form creator
+2019-11-01 04:53:54,613 DEBUG:__main__:End form creator
+2019-11-01 04:54:48,200 DEBUG:__main__:Start main
+2019-11-01 04:54:48,200 DEBUG:__main__:Start init parms
+2019-11-01 04:54:48,565 DEBUG:__main__:Start main screen init
+2019-11-01 04:55:07,296 DEBUG:__main__:Start main
+2019-11-01 04:55:07,296 DEBUG:__main__:Start init parms
+2019-11-01 04:55:07,660 DEBUG:__main__:Start main screen init
+2019-11-01 04:55:11,757 DEBUG:__main__:End main 0:00:04.461255
+2019-11-01 04:58:51,229 DEBUG:__main__:Start main
+2019-11-01 04:58:51,230 DEBUG:__main__:Start init parms
+2019-11-01 04:58:51,570 DEBUG:__main__:Start main screen init
+2019-11-01 04:58:53,376 DEBUG:__main__:End main 0:00:02.147123
+2019-11-01 05:54:43,231 DEBUG:__main__:Start main
+2019-11-01 05:54:43,231 DEBUG:__main__:Start init parms
+2019-11-01 05:54:43,593 DEBUG:__main__:Start main screen init
+2019-11-01 05:54:44,642 DEBUG:__main__:End main 0:00:01.411081
+2019-11-01 06:34:16,193 DEBUG:__main__:Start main
+2019-11-01 06:34:16,193 DEBUG:__main__:Start convert dict
+2019-11-01 06:34:17,966 DEBUG:__main__:Conversion completed in 0:00:01.773101 .
+2019-11-01 06:34:17,966 DEBUG:__main__:End main 0:00:01.773101
+2019-11-01 06:42:40,323 DEBUG:__main__:Start main
+2019-11-01 06:42:40,324 DEBUG:__main__:Start init parms
+2019-11-01 06:42:40,674 DEBUG:__main__:Start main screen init
+2019-11-01 06:43:38,391 DEBUG:__main__:Start main
+2019-11-01 06:43:38,391 DEBUG:__main__:Start init parms
+2019-11-01 06:43:38,746 DEBUG:__main__:Start main screen init
+2019-11-01 06:44:13,596 DEBUG:__main__:Start main
+2019-11-01 06:44:13,597 DEBUG:__main__:Start init parms
+2019-11-01 06:44:13,950 DEBUG:__main__:Start main screen init
+2019-11-01 06:44:17,366 DEBUG:__main__:End main 0:00:03.770215
+2019-11-01 06:44:53,650 DEBUG:__main__:Start main
+2019-11-01 06:44:53,651 DEBUG:__main__:Start init parms
+2019-11-01 06:44:54,023 DEBUG:__main__:Start main screen init
+2019-11-01 09:35:12,766 DEBUG:__main__:Start main
+2019-11-01 09:35:12,767 DEBUG:__main__:Start init parms
+2019-11-01 09:35:13,111 DEBUG:__main__:Start main screen init
+2019-11-01 09:35:43,458 DEBUG:__main__:Start main
+2019-11-01 09:35:43,458 DEBUG:__main__:Start init parms
+2019-11-01 09:35:43,812 DEBUG:__main__:Start main screen init
+2019-11-01 09:35:45,357 DEBUG:__main__:End main 0:00:01.899109
+2019-11-01 09:40:56,733 DEBUG:__main__:Start main
+2019-11-01 09:40:56,733 DEBUG:__main__:Start init parms
+2019-11-01 09:40:57,088 DEBUG:__main__:Start main screen init
+2019-11-01 09:41:04,210 DEBUG:__main__:End main 0:00:07.477428
+2019-11-01 10:01:52,244 DEBUG:__main__:Start main
+2019-11-01 10:01:52,244 DEBUG:__main__:Start init parms
+2019-11-01 10:01:52,599 DEBUG:__main__:Start main screen init
+2019-11-01 18:23:25,337 DEBUG:__main__:Start form creator
+2019-11-01 18:23:25,528 DEBUG:__main__:End form creator
+2019-11-01 18:26:02,437 DEBUG:__main__:Start form creator
+2019-11-01 18:26:02,595 DEBUG:__main__:End form creator
+2019-11-01 22:55:41,905 DEBUG:__main__:Start form creator
+2019-11-01 22:55:42,083 DEBUG:__main__:End form creator
