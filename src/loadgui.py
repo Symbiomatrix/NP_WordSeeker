@@ -6,10 +6,16 @@ Created on 30/10/19
 @author: Symbiomatrix
 
 Todo:
-Drop button (+logic).
+- Drop button should be enabled only after commit + select.
+  New, rollback, drop, desel should disable it.
+  (Gridtext, gtype and numdiff changes have no immediate effect).
+- Commit should mark null grid cells (red) and refuse to search combos.
 
 Features:
 Gui with switchable forms and ad hoc modifications to any controls.
+Ad hocs include: Create board from plain text (resizable),
+commit style calc combos, css marks for special tiles and selection,
+select & drop tiles move. 
 
 Future:
 
@@ -22,8 +28,12 @@ Bugs:
 Notes:
 - TexteEdit control has toHtml / toPlainText methods for extracting the text.
 - Lineedit / label have text property and method.
+- Haven't explicitly set it, but the tab order of the grid is cols-rows.
+  This is important for input convenience.
 
 Version log:
+04/11/19 V0.9 Added empty tile detection.
+03/11/19 V0.8 Added select & drop move + button.
 01/11/19 V0.7 Completed list handling up to groupings.
 31/10/19 V0.5 Completed basic design, grid generation, new + commit (p) + rollback board, colouring (p).
 30/10/19 V0.1 Forked gui from ft.
@@ -133,6 +143,7 @@ LOGMSG.update({
 })
 METHCODES.update({
 "guierr": (1,"Gui froze."),
+"cmderr": (11,"Disallowed operation."),
 # "inserr": (5,"Insert to db failed."),
 # "upderr": (6,"Update db failed."),
 # "infloop": (9,"Entered an infinite loop state."),
@@ -239,6 +250,12 @@ class Grouping:
         if g not in self.dstore:
             self.dstore[g] = dict()
         self.dstore[g][k] = e
+    
+    def Get_Group(self,g):
+        """Obtains all elems in a group.
+        
+        Dict does include the key, for no specific reason."""
+        return self.dstore[g]
     
     def Group_Other(self,k,g):
         """Obtains the elems in a group save for one.
@@ -582,6 +599,8 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         self.cmdNew.clicked.connect(self.New_Board)
         self.cmdUpd.clicked.connect(self.Commit_Board)
         self.cmdCan.clicked.connect(self.Rollback_Board)
+        # Plain func sends p2 = False which fails the trigger, hence lmb.
+        self.cmdDrop.clicked.connect(lambda: self.Select_Drop())
         self.lstRes1.itemSelectionChanged.connect(
             lambda: self.Sel_Combo(self.lstRes1,"opt"))
         self.lstRes1.itemDoubleClicked.connect(
@@ -931,12 +950,19 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         The grid textbox will NOT be considered (used as bk and overwritten)."""
         global quecmb1
         global quecmb2
-        quecmb1 = []
-        quecmb2 = []
-        self.lstRes1.clear()
-        self.lstRes2.clear()
+        verr = 0
         try:
+            quecmb1 = []
+            quecmb2 = []
+            self.lstRes1.clear()
+            self.lstRes2.clear()
             self.Refresh_Board()
+            # Check for empty tiles. Refresh marks them.
+            for wedgie in self.ltxtBoard:
+                if len(wedgie.text().strip()) == 0:
+                    verr = METHCODES["cmderr"][0]
+            if verr != 0:
+                return
             gi = [wedgie.text() for wedgie in self.ltxtBoard]
             gi = Val_Conv(gi,False)
             gi = Hexify(gi)
@@ -975,7 +1001,13 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         Uses the grid textbox, which is only updated by user and commits.
         Not a perfect rollback, murky treatment of drops, good enough for now.
         Also, a true rollback would reset the controls, saving here."""
+        global quecmb1
+        global quecmb2
         try:
+            quecmb1 = []
+            quecmb2 = []
+            self.lstRes1.clear()
+            self.lstRes2.clear()
             gi = Graph_Input(self.txtGrid.toPlainText())
             sgi = Val_Conv(gi,True)
             lclr = Colour_Decision(gi,False)
@@ -992,12 +1024,53 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         
         Spam."""
         try:
-            lvals = [wedgie.text() for wedgie in self.ltxtBoard]
+            lvals = [wedgie.text().strip() for wedgie in self.ltxtBoard]
             lclr = Colour_Decision(lvals,False)
             if lvals is not None:
                 for i,_ in enumerate(lvals):
                     wboard = self.ltxtBoard[i]
                     Colour_Control(wboard,*lclr[i])
+        except Exception as err:
+            Quiterr(err)
+            
+    def Select_Drop(self,lchain = None):
+        """Clears the grid of selected chain and curse destroyed tiles.
+        
+        Cont: Should copy the new structure to grid text.
+        Or mayhap commit ought to do so."""
+        global quecmb1
+        global quecmb2
+        try:
+            # Obtain chain from any combo type lists.
+            if lchain is None:
+                lchain = [] # Prolly a mistake, but this is natural corruption.
+                lcmb = MLSTCONT.Get_Group("combo")
+                for lstk in lcmb.keys():
+                    (cidx,_,_,quemem) = List_Getsel1(lcmb[lstk],lstk)
+                    if cidx >= 0: # Is selected.
+                        lchain = quemem
+            
+            # Prep the graph for chain move func.
+            lvals = [wedgie.text() for wedgie in self.ltxtBoard]
+            lboard2 = Hexify(self.ltxtBoard)
+            gi = Val_Conv(lvals,False)
+            gi = Hexify(gi)
+            groot = BNgraph(None)
+            groot.build_hex(gi)
+            groot.Tile_Move(lchain)
+            # Update the gui from graph.
+            for idxc,_ in enumerate(lboard2):
+                for idxr,_ in enumerate(lboard2[idxc]):
+                    wboard = lboard2[idxc][idxr]
+                    nval = Val_Conv(groot.root[(idxc,idxr)].value,True) # Alt: Hex convert all ahead.
+                    wboard.setText(nval)
+            # Clear board. Not sure whether clear triggers sel / desel.
+            # CONT: Should be a func.
+            quecmb1 = []
+            quecmb2 = []
+            self.lstRes1.clear()
+            self.lstRes2.clear()
+            self.Refresh_Board()
         except Exception as err:
             Quiterr(err)
 

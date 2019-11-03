@@ -511,3 +511,6 @@
 2019-11-01 18:26:02,595 DEBUG:__main__:End form creator
 2019-11-01 22:55:41,905 DEBUG:__main__:Start form creator
 2019-11-01 22:55:42,083 DEBUG:__main__:End form creator
+2019-11-03 19:02:10,764 DEBUG:__main__:Start main
+2019-11-03 19:02:10,766 DEBUG:__main__:Start init parms
+2019-11-03 19:02:11,128 DEBUG:__main__:Start main screen init

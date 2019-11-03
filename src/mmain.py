@@ -6,11 +6,7 @@ Created on 20/09/19
 @author: Symbiomatrix
 
 Todo: 
-- Select combo and drop next layer. Consists of combo removal,
-  curse dig (if not over combo), singular transposition (unpredictable).
-- Interface to improve input x10.
-Finishing touches to main. Make it more robust to bad input.
-
+- Finishing touches to main. Make it more robust to bad input.
 Features:
 Given a graph of possible movements, values, and 'specials' per node,
 and dictionary of good / bad words,
@@ -22,10 +18,12 @@ In this game, it's hexagonal which is +-a 2d array with diagonals.
   Contains one main dict, node key (tup), node has value + power + tup of refs.
 - Navigation function: Prolly based on dijkstra, checks all graph routes 
     available on the dict tries.
-In number mode (via main func or gui), matches digits of variable difference.
+- In number mode (via main func or gui), matches digits of variable difference.
+- Select combo and drop next layer. Consists of combo removal,
+  curse dig (if not over a chain link), singular transposition (unpredictable).
 GUI - Persistent state of the grid, colouration of special tiles,
 commit / rollback with single undo, dynamic alloc of tiles (per the same funcs),
-free mode swap.
+free mode swap, drop.
 
 Future:
 - Improve ui - modifier on left side by def (even when sequentialy);
@@ -43,6 +41,7 @@ Bugs:
 Yes please.
 
 Version log:
+03/11/19 V2.2 Added tile move (combo selection only). - ALPHA RELEASE
 01/11/19 V2.1 Number mode complete, gui mostly done,
                 including selection colour gradients and conveniences.
                 Rearranged package structure somewhat. It's not great.
@@ -172,7 +171,11 @@ TILECHG = "*"
 RETILEPOS = BRKTEER.format(TILEADD + TILEREM + TILECHG)
 RETILEACT = BRKTEER.format(TILEQM + TILECLR)
 RETILEVAL = BRKTEER.format(TILEGOLD + TILECURSE)
-TILEVAL2 = (" " + TILECURSE + TILEGOLD,"012")
+TILENORM2 = 0
+TILECURSE2 = 1
+TILEGOLD2 = 2
+TILEVAL2 = (" " + TILECURSE + TILEGOLD,
+            str(TILENORM2) + str(TILECURSE2) + str(TILEGOLD2))
 SCLET = [("ADEGHILNORSTU".lower(),100),
          ("BCFKMPQVWY".lower(),200),
          ("JXZ".lower(),300),
@@ -184,7 +187,8 @@ MAXCLR2 = 200 # In combos only.
 DCOLOUR = {"gold":(2,(MAXCLR,MAXCLR,0,MAXCLR)),
            "curse":(1,(0,MAXCLR,0,MAXCLR)),
            "normal":(0,(None,None,None,None)),
-           "combo":(-1,(LSTPH,LSTPH,LSTPH,LSTPH))}
+           "combo":(-1,(LSTPH,LSTPH,LSTPH,LSTPH)),
+           "error":(-9,(MAXCLR,0,0,MAXCLR))}
 MAXCMB = 10
 
 LOGMSG = uti.LOGMSG
@@ -451,9 +455,9 @@ class BNgraph():
                 except Exception as err:
                     print(err)
                     raise
-                if ctyp == 1: # Cursed penalty is heavier by row.
+                if ctyp == TILECURSE2: # Cursed penalty is heavier by row.
                     vscore2 = vscore2 + 100 * (4 ** cid[1])
-                elif ctyp == 2:
+                elif ctyp == TILEGOLD2:
                     gcnt = gcnt + 1
                 # Letter value check. Dict should be equivalent.
                 for chksc in SCLET: 
@@ -509,6 +513,81 @@ class BNgraph():
             if idx >= maxvals or idx >= len(lscore):
                 indstop = True
         return lroute
+    
+    def Tile_Move(self,lchain):
+        """Breaks tiles in chain and under curse tiles.
+        
+        Loops from the lower left corner to the lower right,
+        with an inner loop that goes upwards per col and picks 'living' tiles only.
+        The curse corruption effect is overridden if the chain is directly under,
+        as such not completely separable to a func without additional notetaking."""
+        # Step 1: Find the left corner by traversing ld from the root.
+        # Highly presumptive of the graph structure, but that's the func's rules.
+        # Recall that id[0] = col, id[1] = row.
+        cnode = self.root[(0,0)] # No actual reference to 'first' nonnull node.
+        indstop = False
+        while not indstop:
+            if (cnode.id[0] - 1,cnode.id[1]) in cnode.refs: # Go left.
+                cnode = cnode.refs[(cnode.id[0] - 1,cnode.id[1])]
+            elif (cnode.id[0],cnode.id[1] + 1) in cnode.refs: # Go down.
+                cnode = cnode.refs[(cnode.id[0],cnode.id[1] + 1)]
+            else:
+                indstop = True
+        
+        # Step 2: Go up and copy vals not chained or cursed, leave out all the rest.
+        # Loop this for adjacent cols / bottom nodes. 
+        indstop = False
+        while not indstop: # Loop through cols.
+            cnode2 = cnode
+            cnode3 = cnode2
+            indstop2 = False
+            indclear = False
+            while not indstop2: # Loop up the col's rows (target tile).
+                indstop3 = False
+                while not indstop3: # Extra loop for source living tiles.
+                    if indclear: # No more living tiles left, clear content.
+                        indstop3 = True
+                        nval = None # Or empty string?
+                    else:
+                        indlive = True
+                        pidx = (cnode3.id[0],cnode3.id[1] - 1) 
+                        if cnode3.id in lchain:
+                            indlive = False
+                        # Normal / gold tiles under curse are destroyed.
+                        # Mind, ignoring chains under curse is implicit.
+                        if (cnode3.value[1] != TILECURSE2):
+                            if pidx in cnode3.refs:
+                                if (cnode3.refs[pidx].value[1] == TILECURSE2):
+                                    # Above exists and is cursed.
+                                    indlive = False
+                                    # All else - def alive.
+                        
+                        if indlive: # Found live tile, copy and continue.
+                            indstop3 = True
+                            nval = cnode3.value
+                        if pidx in cnode3.refs:
+                            cnode3 = cnode3.refs[pidx]
+                        else: # Got all the way up, start handing out nulls.
+                            # The loop will terminate next iter if cleared and dead.
+                            # Otherwise, sends one last val and the rest cleared.
+                            indclear = True
+                    
+                # Value obtained, copy it and continue upwards. 
+                pidx = (cnode2.id[0],cnode2.id[1] - 1)
+                cnode2.value = nval
+                if pidx in cnode2.refs:
+                    cnode2 = cnode2.refs[pidx]
+                else: # All sources overwritten, may continue to next col. 
+                    indstop2 = True
+                
+            if (cnode.id[0] + 1,cnode.id[1] + 1) in cnode.refs: # Hexgrid alternates in length.
+                cnode = cnode.refs[cnode.id[0] + 1,cnode.id[1] + 1]
+            elif (cnode.id[0] + 1,cnode.id[1] - 1) in cnode.refs:
+                cnode = cnode.refs[cnode.id[0] + 1,cnode.id[1] - 1]
+            else:
+                indstop = True
+        
+        return self
 
 def DebP_Curbod(curbod,htmlbod,windlen = 30):
     """Short segment for print around list markers in long text.
@@ -634,11 +713,11 @@ def Graph_Input(iliner = None):
                 cedit.extend((c,0) for c in cinp[i])
             elif len(cinp[i]) > 0:
                 if TILECURSE in cinp[i]:
-                    vtile = 1
+                    vtile = TILECURSE2
                 elif TILEGOLD in cinp[i]:
-                    vtile = 2
+                    vtile = TILEGOLD2
                 else:
-                    vtile = 0
+                    vtile = TILENORM2
                 ctile = re.sub(RETILEVAL,"",cinp[i])
                 if prmchg is not None: # Alter a prior tile.
                     if prmchg[0] == 1:
@@ -676,17 +755,17 @@ def Val_Conv1(val,tostr = True):
     Spam.""" 
     if uti.islstup(val) and tostr: # To gui.
         vcnv = str(val[0])
-        if val[1] == 1:
+        if val[1] == TILECURSE2:
             vcnv = TILECURSE + str(vcnv)
-        elif val[1] == 2:
+        elif val[1] == TILEGOLD2:
             vcnv = TILEGOLD + str(vcnv)
     elif not uti.islstup(val) and not tostr: # To backend list.
         if TILECURSE in val:
-            vtile = 1
+            vtile = TILECURSE2
         elif TILEGOLD in val:
-            vtile = 2
+            vtile = TILEGOLD2
         else:
-            vtile = 0
+            vtile = TILENORM2
         ctile = re.sub(RETILEVAL,"",val)
         vcnv = (ctile,vtile)
     else:
@@ -713,11 +792,16 @@ def Colour_Decision(val,indmark = False):
                     for i,_ in enumerate(val)]
     else:
         lcnv = Val_Conv(val,False)
+        if not uti.islstup(lcnv[0]): # Colour a single tile.
+            lcnv = [lcnv]
         lclr = []
         for v in lcnv:
-            for k in DCOLOUR.keys():
-                if DCOLOUR[k][0] == v[1]:
-                    lclr.append(DCOLOUR[k][1])
+            if v[0] == "" or v[0] is None: # Empty tiles.
+                lclr.append(DCOLOUR["error"][1])
+            else:
+                for k in DCOLOUR.keys():
+                    if DCOLOUR[k][0] == v[1]:
+                        lclr.append(DCOLOUR[k][1])
     return lclr
 
 def Flatten(l2):
@@ -841,14 +925,15 @@ def Main_Test():
 #                       n,q,n,l,t,v"""
 #             gi = [(v,0) for v in gi if len(v) > 0]
 #             gi = Graph_Input(smpl)
+            # Form activation.
             mgui.Start_Form()
-            smpl = """2,3,5,5,5,5,
+            smpl = """2,3,5,5-,5,5,
                       3,1,2,3,3,2,4,
-                      4,2,1,4,1,3,
+                      4,2,1,4-,1,3,
                       3,4,2,5,5,3,3,
-                      3,5,2,2,4,2,
+                      3,5,2-,2,4,2,
                       3,2,2,2,1,1,5,
-                      5,2,3,1,5,4,
+                      5,2,3,1,5-,4,
                       3,4,1,1,1,4,3,
                       4,4,5,5,4,1"""
             gi = Graph_Input(smpl)
@@ -871,6 +956,10 @@ def Main_Test():
             groot.Print_Scores(optim)
             print("Topmost danger:")
             groot.Print_Scores(dang)
+            
+            # Clearing mechanism.
+            groot.Tile_Move([(0,3),(0,4),(1,3)])
+#             Print_Format(groot) # Don't have one for graphs.
             
             print(verr)
             indstop = True # TEST

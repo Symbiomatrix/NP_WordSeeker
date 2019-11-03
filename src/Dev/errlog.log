@@ -659,3 +659,56 @@
 2019-11-02 06:30:09,820 DEBUG:__main__:End main 0:00:16.898967
 2019-11-02 06:30:16,295 DEBUG:__main__:Start main TEST
 2019-11-02 06:32:19,180 DEBUG:__main__:Start main TEST
+2019-11-03 17:20:34,131 DEBUG:__main__:Start main TEST
+2019-11-03 17:20:34,142 DEBUG:__main__:Start numverse
+2019-11-03 17:20:34,162 DEBUG:__main__:Completed numversal in 0:00:00.019001 .
+2019-11-03 17:23:26,352 DEBUG:__main__:Start main TEST
+2019-11-03 17:23:26,357 DEBUG:__main__:Start numverse
+2019-11-03 17:23:26,381 DEBUG:__main__:Completed numversal in 0:00:00.024001 .
+2019-11-03 17:26:06,478 DEBUG:__main__:Start main TEST
+2019-11-03 17:26:06,484 DEBUG:__main__:Start numverse
+2019-11-03 17:26:06,504 DEBUG:__main__:Completed numversal in 0:00:00.020002 .
+2019-11-03 17:27:35,275 DEBUG:__main__:Start main TEST
+2019-11-03 17:27:35,283 DEBUG:__main__:Start numverse
+2019-11-03 17:27:35,307 DEBUG:__main__:Completed numversal in 0:00:00.024002 .
+2019-11-03 17:29:10,684 DEBUG:__main__:Start main TEST
+2019-11-03 17:29:10,689 DEBUG:__main__:Start numverse
+2019-11-03 17:29:10,708 DEBUG:__main__:Completed numversal in 0:00:00.019001 .
+2019-11-03 17:31:31,404 DEBUG:__main__:Start main TEST
+2019-11-03 17:31:31,410 DEBUG:__main__:Start numverse
+2019-11-03 17:31:31,431 DEBUG:__main__:Completed numversal in 0:00:00.021001 .
+2019-11-03 17:32:23,958 DEBUG:__main__:Start main TEST
+2019-11-03 17:32:23,964 DEBUG:__main__:Start numverse
+2019-11-03 17:32:23,984 DEBUG:__main__:Completed numversal in 0:00:00.019001 .
+2019-11-03 17:32:35,594 DEBUG:__main__:Start main TEST
+2019-11-03 17:32:35,600 DEBUG:__main__:Start numverse
+2019-11-03 17:32:35,621 DEBUG:__main__:Completed numversal in 0:00:00.021001 .
+2019-11-03 18:41:15,249 DEBUG:__main__:Start main TEST
+2019-11-03 18:43:01,130 DEBUG:__main__:Start main TEST
+2019-11-03 18:46:25,436 ERROR:loadgui:Error in gui: Func Select_Drop, class TypeError ("argument of type 'NoneType' is not iterable",)
+2019-11-03 18:46:27,855 DEBUG:__main__:Start numverse
+2019-11-03 18:46:27,899 DEBUG:__main__:Completed numversal in 0:00:00.044003 .
+2019-11-03 18:47:27,333 DEBUG:__main__:Start main TEST
+2019-11-03 18:47:44,882 ERROR:loadgui:Error in gui: Func Commit_Board, class ValueError ("invalid literal for int() with base 10: ''",)
+2019-11-03 18:47:44,901 DEBUG:__main__:Start numverse
+2019-11-03 18:47:44,917 DEBUG:__main__:Completed numversal in 0:00:00.016001 .
+2019-11-03 18:47:44,963 DEBUG:__main__:End main 0:00:17.630008
+2019-11-03 18:47:54,497 DEBUG:__main__:Start main TEST
+2019-11-03 18:49:25,096 DEBUG:__main__:Start numverse
+2019-11-03 18:49:25,121 DEBUG:__main__:Completed numversal in 0:00:00.025001 .
+2019-11-03 18:49:25,162 DEBUG:__main__:End main 0:01:30.664185
+2019-11-03 18:58:52,474 DEBUG:__main__:Start main TEST
+2019-11-03 18:59:22,950 DEBUG:__main__:Start main TEST
+2019-11-03 19:02:19,877 DEBUG:__main__:Start main TEST
+2019-11-03 19:09:44,278 DEBUG:__main__:Start main TEST
+2019-11-03 19:09:44,777 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:10:33,318 DEBUG:__main__:Start main TEST
+2019-11-03 19:10:33,817 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:11:08,772 DEBUG:__main__:Start numverse
+2019-11-03 19:11:08,809 DEBUG:__main__:Completed numversal in 0:00:00.036002 .
+2019-11-03 19:11:10,861 DEBUG:__main__:End main 0:00:37.543147
+2019-11-03 19:11:15,960 DEBUG:__main__:Start main TEST
+2019-11-03 19:11:16,384 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:14:13,321 DEBUG:__main__:Start numverse
+2019-11-03 19:14:13,344 DEBUG:__main__:Completed numversal in 0:00:00.022002 .
+2019-11-03 19:14:13,374 DEBUG:__main__:End main 0:02:57.414147
