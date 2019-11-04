@@ -82,6 +82,13 @@ class Ui_MainWindow(object):
         self.txtDiff = QtWidgets.QLineEdit(self.centralwidget)
         self.txtDiff.setGeometry(QtCore.QRect(720, 300, 113, 20))
         self.txtDiff.setObjectName("txtDiff")
+        self.lblDubstep = QtWidgets.QLabel(self.centralwidget)
+        self.lblDubstep.setGeometry(QtCore.QRect(720, 320, 101, 31))
+        self.lblDubstep.setWordWrap(True)
+        self.lblDubstep.setObjectName("lblDubstep")
+        self.txtDubstep = QtWidgets.QLineEdit(self.centralwidget)
+        self.txtDubstep.setGeometry(QtCore.QRect(720, 350, 113, 20))
+        self.txtDubstep.setObjectName("txtDubstep")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 934, 21))
@@ -124,5 +131,7 @@ class Ui_MainWindow(object):
         self.lblGtype.setText(_translate("MainWindow", "Game type"))
         self.lblDiff.setText(_translate("MainWindow", "Number difference"))
         self.txtDiff.setText(_translate("MainWindow", "1"))
+        self.lblDubstep.setText(_translate("MainWindow", "Auto step (in ms and 0 = manual)"))
+        self.txtDubstep.setText(_translate("MainWindow", "1000"))
 
 

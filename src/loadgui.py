@@ -9,7 +9,6 @@ Todo:
 - Drop button should be enabled only after commit + select.
   New, rollback, drop, desel should disable it.
   (Gridtext, gtype and numdiff changes have no immediate effect).
-- Custom path selection, to augment partition. 
 
 Features:
 Gui with switchable forms and ad hoc modifications to any controls.
@@ -18,17 +17,21 @@ Ad hocs include:
 - Commit style calc combos, with some tested chain filtering.
 - Css marks for special tiles, selection and more.
 - Select & drop tiles move, emptied slots marked.
-- Stepping through a chain for clarification (manual currently).
+- Stepping through a chain for clarification - manual + auto timed.
 - Select partial chain by step, can drop by paritition.
 
-Future:
-- Step by step of a long chain (timed or on press).
+Future: 
+- Custom path selection, to augment partition. 
+- Grab data from screen. There are libs for ocr,
+  but they don't work as well as adjusting to the game itself.
 
 Bugs:
 - "AttributeError: Can't get attribute 'BNtrie' on <module '__main__' from..."
   Error when loading a dict saved directly from mmain pickle.
   Prolly the class instance is forked and unusable.
   Workaround: Conversion + load directly from the gui. 
+- Rollback should adjust itself to the grid size, rather than crash.
+  PARTLY TESTED.
 
 Notes:
 - TextEdit control has toHtml / toPlainText methods for extracting the text.
@@ -37,6 +40,8 @@ Notes:
   This is important for input convenience.
 
 Version log:
+04/11/19 V0.92 Fixed rollback crashes - warns anent excess / insufficient input
+                and updates what it can.
 04/11/19 V0.91 Added step marking, limited chain partition (no direct access),
                 updating text grid on commit.
 03/11/19 V0.9 Added empty tile detection.
@@ -614,16 +619,20 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         self.setupUi(self)  # This is defined in design.py file automatically
                             # It sets up layout and widgets that are defined
         
+        self.tmrStep = QtCore.QTimer() # Haven't found one in designer.
         self.Screen_Init()
         
         # Custom events.
+        self.tmrStep.timeout.connect(lambda:self.Step_Chain())
+        # Cmds.
         self.cmdNew.clicked.connect(self.New_Board)
         self.cmdUpd.clicked.connect(self.Commit_Board)
         self.cmdCan.clicked.connect(self.Rollback_Board)
         # Plain func sends p2 = False which fails the trigger, hence lmb.
         self.cmdDrop.clicked.connect(lambda: self.Select_Drop())
-        self.cmdStep.clicked.connect(lambda: self.Step_Chain())
+        self.cmdStep.clicked.connect(lambda: self.Step_Setup())
         self.cmdParti.clicked.connect(lambda: self.Step_Partition())
+        # Lists.
         self.lstRes1.itemSelectionChanged.connect(
             lambda: self.Sel_Combo(self.lstRes1,"opt"))
         self.lstRes1.itemDoubleClicked.connect(
@@ -632,6 +641,9 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
             lambda: self.Sel_Combo(self.lstRes2,"dang"))
         self.lstRes2.itemDoubleClicked.connect(
             lambda: self.Desel_Combo(self.lstRes2))
+        # Textboxes.
+        self.txtDubstep.editingFinished.connect(self.Step_Updinter)
+        
 #         self.cmdLoadFld.clicked.connect(self.Load_Click)
 #         self.cmdSelDb.clicked.connect(lambda: Go_Form(self.appname,"Query"))
 #         self.cmdUpdO.clicked.connect(lambda: self.Upd_Click(1))
@@ -941,6 +953,7 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         
         Spam."""
         try:
+            # Alt: In this and rollback, turn off dig2 unless num diff >= 2/3.
             gi = Graph_Input(self.txtGrid.toPlainText())
             gi = Hexify(gi)
             for wboard in self.ltxtBoard:
@@ -1039,12 +1052,45 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
             sgi = Val_Conv(gi,True)
             lclr = Colour_Decision(gi,0)
             if gi is not None:
-                for i,_ in enumerate(gi):
+                if len(gi) != len(self.ltxtBoard):
+                    uti.Msgbox("Text mismatches board, some input ignored.","Warning")
+                for i in range(min(len(gi),len(self.ltxtBoard))):
                     wboard = self.ltxtBoard[i]
                     wboard.setText(sgi[i])
                     Colour_Control(wboard,*lclr[i])
         except Exception as err:
             Quiterr(err)
+            
+    def Step_Setup(self):
+        """Handles automated stepping. 
+        
+        Per the textbox and current state, will start / stop the timer,
+        or run one manual step."""
+        try:
+            if self.tmrStep.isActive(): # Already active, stop it.
+                self.tmrStep.stop()
+            else:
+                self.Step_Updinter()
+        except Exception as err:
+            Quiterr(err)
+    
+    def Step_Updinter(self):
+        """Update step interval when changed (or forced). 
+        
+        There's no need to stop-start during the change.
+        Alt: Change to single fire rather than activate func;
+        seems more convoluted."""
+        if len(self.txtDubstep.text().strip()) == 0:
+            nstep = 0
+        else:
+            nstep = float(self.txtDubstep.text())
+        if nstep > 0: # Automatic.
+            if nstep <= 100: # Prolly in secs.
+                nstep = nstep * 1000
+            self.tmrStep.start(nstep)
+        else: # Manual now, take one step at a time.
+            self.tmrStep.stop()
+            self.Step_Chain()
             
     def Step_Chain(self,lchain = None): # parm1, parm2 which are returned.
         """Steps through the currently selected chain.
@@ -1138,6 +1184,7 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         global stchain
         global edchain
         try:
+            self.tmrStep.stop()
             stepidx = None
             pclr = ""
             stchain = None

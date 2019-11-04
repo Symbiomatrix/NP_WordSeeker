@@ -7,7 +7,6 @@ Created on 20/09/19
 
 Todo: 
 - Finishing touches to main. Make it more robust to bad input.
-- Number split from text actually doesn't work. Fix it. 
 
 Features:
 Given a graph of possible movements, values, and 'specials' per node,
@@ -39,12 +38,22 @@ Notes:
   The letter value is semi dependent on the letter (eg X seems to be 300 always),
   but may vary within the same grid. The tiny yellow dots in each tile show it.
   Possibly useful to create a general guidelines, but it's negligible.
-  I'm 95% certain the reason for discrepancies is that shuffle doesn't alter tvalue. 
+  I'm 95% certain the reason for discrepancies is that shuffle doesn't alter tvalue.
+- Annoyingly, py and regexr alternation operators (|) seem to agree on picking the first,
+  rather than LONGEST match, despite documentation.
+  This make prefix override suffix, splitting the modifier away,
+  unless prevented somehow. This I did by negative lookahead of the suffix,
+  in the special case of single tile (eg 5-$), otherwise next tile takes prefix.
+  Of course, 5-5- breaks it (first mod to second tile and second mod standalone),
+  but that's technically correct - prefix overrides suffix.
+  # RETILEPREF = ([=-]?.)|(.[=-]?) # Simple version, 5- -> (5,-).
 
 Bugs:
 Yes please.
 
 Version log:
+04/11/19 V2.4 Upgraded graph inp to handle sequential tiles (both ints and mods),
+                1X tiles and to use valconv. It is quite robust now.
 03/11/19 V2.3 Numverse's max iters reduced to 10% for simple (123) grids (100k).
                 Added further culling of chains by length to 50% (41.3k).
                 Together, these prevent the gui from freezing 20s+.
@@ -179,6 +188,10 @@ TILECHG = "*"
 RETILEPOS = BRKTEER.format(TILEADD + TILEREM + TILECHG)
 RETILEACT = BRKTEER.format(TILEQM + TILECLR)
 RETILEVAL = BRKTEER.format(TILEGOLD + TILECURSE)
+# Single char only, mod always prefix other than single tile.
+RETILEPREF = "([=-]?.(?![=-]$))|(.[=-]?)"
+RETILEDIG2 = "([=-]?1\d)|(1\d[=-]?)" # Potential double digit.
+#RETILEPREF = "[=-]?(1\d|(.))" # Single char or 10-19, but confused by single digits.
 TILENORM2 = 0
 TILECURSE2 = 1
 TILEGOLD2 = 2
@@ -713,20 +726,24 @@ def Load_Dict():
     Deb_Prtlog(LOGMSG["dloadok"].format(tdiff),logging.DEBUG)
     return (tri1,tri2)
 
-def Graph_Input(iliner = None):
+def Graph_Input(iliner = None,inddig2 = True):
     """Graph input.
     
     Accepts either cmd like repeating input (until period or end keywords),
     or a single line of text (from gui).
+    Each tile can contain up to one modifier (=/-) as a prefix (preferred) or suffix,
+    and one alphanumeric char or digit; with the exception of 1X,
+    if inddig2 is activated and it is separate from other tiles.
+    By def, this ind is on for completeness, but it should be off for convenience
+    in most boards which don't reach higher numbers.
     Currently tailored for the game: 6/7x9 grid and value modifiers.
     Prior input can be corrected using this format: *20 g,
     with the actions + to add, / to remove, * to change.
     Note - remove also grabs a placeholder parm.
     Terminate with fin, end, quit or period.
-    Creep: Make generic by passing the print function parms (dict).
-    Creep: In num mode, I think index chg by separating the char / edit, but untested.
-     Currently expects either 1c input or explicit sep.
-     So overall do not care for the game state in this func."""
+    Will automatically split sequential input to single char + prefixed modifier,
+    save for the special case of single 2 char number (eg =10, 12).
+    Creep: Make generic by passing the print function parms (dict)."""
     indstop = False
     prmchg = None
     tinp = []
@@ -744,6 +761,7 @@ def Graph_Input(iliner = None):
         cinp = re.split(REDELIM,ursp)
         cedit = []
         for i,_ in enumerate(cinp):
+            cinp1 = None
             if len(re.findall(RETILEPOS,cinp[i])) > 0:
                 # Loop could prolly be done a bit more elegantly.
                 if TILEADD in cinp[i]:
@@ -762,25 +780,44 @@ def Graph_Input(iliner = None):
                     # Creep: Range clear, could use /20 30 format.
                     tinp.clear()
                     cedit.clear()
-            elif cinp[i].isalpha() and prmchg is None: # Contains no modifiers.
-                cedit.extend((c,0) for c in cinp[i])
-            elif len(cinp[i]) > 0:
-                if TILECURSE in cinp[i]:
-                    vtile = TILECURSE2
-                elif TILEGOLD in cinp[i]:
-                    vtile = TILEGOLD2
-                else:
-                    vtile = TILENORM2
-                ctile = re.sub(RETILEVAL,"",cinp[i])
+            elif prmchg is None: # Modifiers intentionally expect singular elems.
+                # Fsr, findall gets confused by multiple groups,
+                # so opted to be explicit with iter.
+                #cedit.extend((c,0) for c in cinp[i])
+                if (len(cinp[i]) <= 3
+                and any(re.findall(RETILEDIG2,cinp[i],uti.REIS))
+                and inddig2): # 10 - 19 with mod and no other tiles.
+                    cinp1 = [cinp[i]]
+                else: # Split to one char prefix tiles.
+                    # Could prolly convert gold / curse to values with clever manipulation,
+                    # but it'd be unreadable so I won't.
+                    lrefs = re.finditer(RETILEPREF,cinp[i],uti.REIS)
+                    cinp1 = []
+                    for cref in lrefs:
+                        tspn = (cref.span(0)[0],cref.span(0)[1])
+                        tmptile = cinp[i][tspn[0]:tspn[1]]
+                        cinp1.append(tmptile) 
+            else: # The debugger is confused for no reason here.
+                cinp1 = cinp[i]
+            
+            # Convert tiles and apply changer funcs.
+            if cinp1 is not None:
+                # Should be in legible format, list of strings.
+                cinp2 = Val_Conv(cinp1,False) 
                 if prmchg is not None: # Alter a prior tile.
                     if prmchg[0] == 1:
-                        tinp.insert(prmchg[1],(ctile,vtile))
+                        tinp.insert(prmchg[1],cinp2)
                     elif prmchg[0] == 2:
                         tinp.pop(prmchg[1])
                     elif prmchg[0] == 3:
-                        tinp[prmchg[1]] = (ctile,vtile)
+                        tinp[prmchg[1]] = cinp2
                 else:
-                    cedit.append((ctile,vtile)) 
+                    if len(cinp2) == 0: # Empty.
+                        pass
+                    elif not uti.islstup(cinp2[0]): # Single tup gets broken.
+                        cedit.append(cinp2)
+                    else:
+                        cedit.extend(cinp2) 
         tinp.extend(cedit)
             
     return tinp
@@ -791,7 +828,13 @@ def Val_Conv(val,tostr = True):
     Save for variable format string - send those to ginp.
     Used in gui / backend integration.
     Assumed format of single values: string, tuple(2), list(tuple(2)).
-    L2 can be a small to large board, L1 of 2+ elems is unhexed."""
+    L2 can be a small to large board, L1 of 2+ elems is unhexed.
+    
+    Bug: As of V2.4/5, it has been tested for all cases;
+    its only error is *list of 2 strs + tostr* with any number of wrappers,
+    which val1 must interpret as a tup and thus fuse to one tile.
+    There are currently no such use cases,
+    as raw input always goes through graphinp before valconv -> str."""
     lcnv = None
     ltype = None
     if not uti.islstup(val): # String.
@@ -800,12 +843,12 @@ def Val_Conv(val,tostr = True):
         lcnv = []
     elif len(val) > 2: # Big L1 of strings / L2.
         ltype = 1
-    elif not uti.islstup(val[0]): # Tuple(2).
+    elif not uti.islstup(val[0]): # Tuple(2 or str).
         ltype = 0
     elif len(val[0]) > 2: # Small L2 of strings.
         ltype = 1
-    elif not uti.islstup(val[0][0]): # list(tup(2))
-        ltype = 0
+    elif not uti.islstup(val[0][0]): # list(tup(2) or two), or L2(str)
+        ltype = 1
     else: # Small L2 of converted vals.
         ltype = 1
     if ltype == 1:
@@ -824,20 +867,36 @@ def Val_Conv1(val,tostr = True):
     
     Spam.""" 
     if uti.islstup(val) and tostr: # To gui.
-        vcnv = str(val[0])
-        if val[1] == TILECURSE2:
-            vcnv = TILECURSE + str(vcnv)
-        elif val[1] == TILEGOLD2:
-            vcnv = TILEGOLD + str(vcnv)
-    elif not uti.islstup(val) and not tostr: # To backend list.
-        if TILECURSE in val:
-            vtile = TILECURSE2
-        elif TILEGOLD in val:
-            vtile = TILEGOLD2
+        indconv = True
+        if len(val) != 2:
+            indconv = False # List(str), just throw away the wrapper.
+            val = val[0]
+        if indconv:
+            vcnv = str(val[0])
+            if val[1] == TILECURSE2:
+                vcnv = TILECURSE + str(vcnv)
+            elif val[1] == TILEGOLD2:
+                vcnv = TILEGOLD + str(vcnv)
         else:
-            vtile = TILENORM2
-        ctile = re.sub(RETILEVAL,"",val)
-        vcnv = (ctile,vtile)
+            vcnv = val
+    elif not tostr: # To backend list.
+        indconv = True
+        if uti.islstup(val):
+            if len(val) == 2:
+                indconv = False # Tuple(2)
+            else: # Otherwise likely list(str), which is confusing.
+                val = val[0]
+        if indconv:
+            if TILECURSE in val:
+                vtile = TILECURSE2
+            elif TILEGOLD in val:
+                vtile = TILEGOLD2
+            else:
+                vtile = TILENORM2
+            ctile = re.sub(RETILEVAL,"",val)
+            vcnv = (ctile,vtile)
+        else:
+            vcnv = val
     else:
         vcnv = val
     

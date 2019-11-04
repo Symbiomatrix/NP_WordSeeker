@@ -973,3 +973,94 @@
 2019-11-04 06:52:21,536 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.014001 .
 2019-11-04 06:52:21,565 DEBUG:__main__:Completed scoring in 0:00:00.029002.
 2019-11-04 06:52:21,566 DEBUG:__main__:End main 0:06:21.209804
+2019-11-04 16:54:49,889 DEBUG:__main__:Start main TEST
+2019-11-04 16:57:26,721 DEBUG:__main__:Start main TEST
+2019-11-04 16:58:49,062 DEBUG:__main__:Start main TEST
+2019-11-04 16:59:33,436 DEBUG:__main__:Start main TEST
+2019-11-04 16:59:51,953 DEBUG:__main__:Start main TEST
+2019-11-04 17:01:07,066 DEBUG:__main__:Start main TEST
+2019-11-04 17:03:59,938 DEBUG:__main__:Start main TEST
+2019-11-04 17:05:26,693 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-04 17:05:26,704 DEBUG:__main__:Start numverse
+2019-11-04 17:14:58,345 DEBUG:__main__:Start main TEST
+2019-11-04 17:27:06,891 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-04 17:27:06,921 DEBUG:__main__:Start numverse
+2019-11-04 17:27:17,857 DEBUG:__main__:Start main TEST
+2019-11-04 17:32:10,661 DEBUG:__main__:Start numverse
+2019-11-04 17:38:32,713 DEBUG:__main__:Start main TEST
+2019-11-04 17:42:33,609 DEBUG:__main__:Start main TEST
+2019-11-04 17:42:41,972 ERROR:loadgui:Error in gui: Func Rollback_Board, class TypeError ('cannot unpack non-iterable int object',)
+2019-11-04 17:42:41,988 DEBUG:__main__:Start numverse
+2019-11-04 17:43:01,363 DEBUG:__main__:Start main TEST
+2019-11-04 17:43:12,275 ERROR:loadgui:Error in gui: Func Rollback_Board, class TypeError ('cannot unpack non-iterable int object',)
+2019-11-04 17:43:12,285 DEBUG:__main__:Start numverse
+2019-11-04 17:44:12,265 DEBUG:__main__:Start main TEST
+2019-11-04 17:45:22,479 DEBUG:__main__:Start main TEST
+2019-11-04 17:46:31,394 DEBUG:__main__:Start numverse
+2019-11-04 17:56:52,703 DEBUG:__main__:Start main TEST
+2019-11-04 17:57:07,274 DEBUG:__main__:Start numverse
+2019-11-04 17:57:46,758 DEBUG:__main__:Start main TEST
+2019-11-04 17:57:58,771 DEBUG:__main__:Start numverse
+2019-11-04 18:33:02,691 DEBUG:__main__:Start main TEST
+2019-11-04 18:34:05,599 DEBUG:__main__:Start numverse
+2019-11-04 18:34:53,898 DEBUG:__main__:Start main TEST
+2019-11-04 18:35:53,712 DEBUG:__main__:Start numverse
+2019-11-04 18:37:42,420 DEBUG:__main__:Start main TEST
+2019-11-04 18:37:42,860 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 18:39:08,836 DEBUG:__main__:Start numverse
+2019-11-04 18:39:36,909 DEBUG:__main__:Start main TEST
+2019-11-04 18:39:37,358 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 18:39:38,531 DEBUG:__main__:Start numverse
+2019-11-04 18:40:22,249 DEBUG:__main__:Start main TEST
+2019-11-04 18:40:22,729 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 18:42:15,197 DEBUG:__main__:Start main TEST
+2019-11-04 18:42:15,690 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 18:45:34,040 DEBUG:__main__:Start main TEST
+2019-11-04 18:45:34,554 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 19:13:23,258 DEBUG:__main__:Start main TEST
+2019-11-04 19:13:23,684 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 19:13:28,084 DEBUG:__main__:Start numverse
+2019-11-04 19:13:28,100 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.016001 .
+2019-11-04 19:14:08,788 DEBUG:__main__:Start main TEST
+2019-11-04 19:14:09,307 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 19:14:24,901 DEBUG:__main__:Start main TEST
+2019-11-04 19:14:25,387 ERROR:loadgui:Error in gui: Func Refresh_Board, class AttributeError ("'MainApp' object has no attribute 'tmrStep'",)
+2019-11-04 19:15:15,941 DEBUG:__main__:Start main TEST
+2019-11-04 19:15:19,514 DEBUG:__main__:Start numverse
+2019-11-04 19:15:19,559 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.045003 .
+2019-11-04 19:16:36,909 DEBUG:__main__:Start main TEST
+2019-11-04 19:16:51,884 DEBUG:__main__:Start main TEST
+2019-11-04 19:27:59,745 DEBUG:__main__:Start main TEST
+2019-11-04 19:28:24,121 DEBUG:__main__:Start main TEST
+2019-11-04 19:29:42,210 DEBUG:__main__:Start main TEST
+2019-11-04 19:30:01,411 DEBUG:__main__:Start main TEST
+2019-11-04 19:30:35,622 DEBUG:__main__:Start main TEST
+2019-11-04 19:30:57,722 DEBUG:__main__:Start main TEST
+2019-11-04 19:33:44,844 DEBUG:__main__:Start main TEST
+2019-11-04 19:34:02,248 DEBUG:__main__:Start main TEST
+2019-11-04 19:35:04,222 DEBUG:__main__:Start main TEST
+2019-11-04 19:39:18,857 DEBUG:__main__:Start main TEST
+2019-11-04 19:40:44,811 DEBUG:__main__:Start main TEST
+2019-11-04 19:49:42,204 DEBUG:__main__:Start main TEST
+2019-11-04 20:01:07,857 DEBUG:__main__:Start main TEST
+2019-11-04 20:01:25,419 DEBUG:__main__:Start main TEST
+2019-11-04 20:02:36,492 DEBUG:__main__:Start main TEST
+2019-11-04 20:05:31,042 DEBUG:__main__:Start main TEST
+2019-11-04 20:05:44,694 DEBUG:__main__:Start main TEST
+2019-11-04 20:07:26,138 DEBUG:__main__:Start main TEST
+2019-11-04 20:07:39,594 DEBUG:__main__:Start main TEST
+2019-11-04 20:07:39,599 DEBUG:__main__:Start numverse
+2019-11-04 20:07:39,617 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.017001 .
+2019-11-04 20:07:39,643 DEBUG:__main__:Completed scoring in 0:00:00.026001.
+2019-11-04 20:07:39,645 DEBUG:__main__:End main 0:00:00.050003
+2019-11-04 20:07:56,601 DEBUG:__main__:Start main TEST
+2019-11-04 20:08:11,140 DEBUG:__main__:Start numverse
+2019-11-04 20:08:11,155 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.015001 .
+2019-11-04 20:08:11,188 DEBUG:__main__:Completed scoring in 0:00:00.031001.
+2019-11-04 20:08:11,190 DEBUG:__main__:End main 0:00:14.589835
+2019-11-04 20:08:24,277 DEBUG:__main__:Start main TEST
+2019-11-04 20:11:50,945 DEBUG:__main__:Start main TEST
+2019-11-04 20:12:37,403 DEBUG:__main__:Start numverse
+2019-11-04 20:12:37,415 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.012001 .
+2019-11-04 20:12:37,451 DEBUG:__main__:Completed scoring in 0:00:00.036002.
+2019-11-04 20:12:37,454 DEBUG:__main__:End main 0:00:46.508660
