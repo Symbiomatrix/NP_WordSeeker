@@ -1064,3 +1064,8 @@
 2019-11-04 20:12:37,415 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.012001 .
 2019-11-04 20:12:37,451 DEBUG:__main__:Completed scoring in 0:00:00.036002.
 2019-11-04 20:12:37,454 DEBUG:__main__:End main 0:00:46.508660
+2019-11-04 20:26:39,412 DEBUG:__main__:Start main TEST
+2019-11-04 20:26:42,492 DEBUG:__main__:Start numverse
+2019-11-04 20:26:42,508 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.016001 .
+2019-11-04 20:26:42,541 DEBUG:__main__:Completed scoring in 0:00:00.033002.
+2019-11-04 20:26:42,542 DEBUG:__main__:End main 0:00:03.130179
