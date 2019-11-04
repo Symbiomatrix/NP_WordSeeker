@@ -712,3 +712,264 @@
 2019-11-03 19:14:13,321 DEBUG:__main__:Start numverse
 2019-11-03 19:14:13,344 DEBUG:__main__:Completed numversal in 0:00:00.022002 .
 2019-11-03 19:14:13,374 DEBUG:__main__:End main 0:02:57.414147
+2019-11-03 19:19:14,161 DEBUG:__main__:Start main TEST
+2019-11-03 19:19:14,607 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:33:27,333 DEBUG:__main__:Start main TEST
+2019-11-03 19:33:27,831 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:34:35,410 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-03 19:34:35,434 DEBUG:__main__:Start numverse
+2019-11-03 19:34:35,460 DEBUG:__main__:Completed numversal in 0:00:00.026002 .
+2019-11-03 19:34:35,528 DEBUG:__main__:End main 0:01:08.194900
+2019-11-03 19:34:46,105 DEBUG:__main__:Start main TEST
+2019-11-03 19:34:46,573 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:38:07,948 DEBUG:__main__:Start main TEST
+2019-11-03 19:38:08,428 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:41:49,436 DEBUG:__main__:Start main TEST
+2019-11-03 19:41:49,921 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 19:46:25,024 DEBUG:__main__:Start main TEST
+2019-11-03 19:46:25,558 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:01:22,298 DEBUG:__main__:Start main TEST
+2019-11-03 20:01:22,866 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:01:59,719 ERROR:loadgui:Error in gui: Func Commit_Board, class NameError ("name 'Cull_Chains' is not defined",)
+2019-11-03 20:02:05,264 DEBUG:__main__:Start numverse
+2019-11-03 20:02:05,313 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.049003 .
+2019-11-03 20:02:23,936 DEBUG:__main__:Start main TEST
+2019-11-03 20:02:24,415 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:05:00,163 DEBUG:__main__:Start main TEST
+2019-11-03 20:05:00,651 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:09:16,869 DEBUG:__main__:Start main TEST
+2019-11-03 20:09:17,356 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:13:00,982 DEBUG:__main__:Start main TEST
+2019-11-03 20:13:01,478 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:15:00,114 DEBUG:__main__:Start main TEST
+2019-11-03 20:15:00,539 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:15:01,931 DEBUG:__main__:Start numverse
+2019-11-03 20:15:01,951 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.020001 .
+2019-11-03 20:15:01,987 DEBUG:__main__:End main 0:00:01.872107
+2019-11-03 20:23:28,442 DEBUG:__main__:Start main TEST
+2019-11-03 20:23:28,867 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:23:43,973 ERROR:loadgui:Error in gui: Func Commit_Board, class IndexError ('tuple index out of range',)
+2019-11-03 20:23:44,173 DEBUG:__main__:Start numverse
+2019-11-03 20:23:44,189 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.016001 .
+2019-11-03 20:24:14,319 DEBUG:__main__:Start main TEST
+2019-11-03 20:24:14,745 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:26:16,797 DEBUG:__main__:Start main TEST
+2019-11-03 20:26:17,238 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:26:31,418 ERROR:loadgui:Error in gui: Func Commit_Board, class TypeError ("'>=' not supported between instances of 'list' and 'int'",)
+2019-11-03 20:26:31,614 DEBUG:__main__:Start numverse
+2019-11-03 20:26:31,634 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.019002 .
+2019-11-03 20:28:00,377 DEBUG:__main__:Start main TEST
+2019-11-03 20:28:00,802 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-03 20:31:10,333 DEBUG:__main__:Start numverse
+2019-11-03 20:31:10,355 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.021001 .
+2019-11-03 20:31:10,383 DEBUG:__main__:Completed scoring in 0:00:00.028002.
+2019-11-03 20:31:10,384 DEBUG:__main__:End main 0:03:10.006868
+2019-11-03 20:34:53,538 DEBUG:__main__:Start main TEST
+2019-11-03 20:35:09,258 DEBUG:__main__:Start main TEST
+2019-11-03 20:35:42,499 DEBUG:__main__:Start main TEST
+2019-11-03 20:37:49,442 DEBUG:__main__:Start main TEST
+2019-11-03 20:47:20,507 DEBUG:__main__:Start numverse
+2019-11-03 20:47:20,535 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.028002 .
+2019-11-03 20:47:20,564 DEBUG:__main__:Completed scoring in 0:00:00.029001.
+2019-11-03 20:47:20,566 DEBUG:__main__:End main 0:09:31.123666
+2019-11-03 21:14:33,219 DEBUG:__main__:Start main TEST
+2019-11-03 21:15:12,661 DEBUG:__main__:Start main TEST
+2019-11-03 21:16:54,716 DEBUG:__main__:Start main TEST
+2019-11-03 21:17:14,123 ERROR:loadgui:Error in gui: Func Show_Details, class IndexError ('list index out of range',)
+2019-11-03 21:17:22,523 DEBUG:__main__:Start numverse
+2019-11-03 21:17:22,551 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.028002 .
+2019-11-03 21:17:22,609 DEBUG:__main__:Completed scoring in 0:00:00.056003.
+2019-11-03 21:17:25,639 DEBUG:__main__:End main 0:00:30.921769
+2019-11-03 21:17:37,763 DEBUG:__main__:Start main TEST
+2019-11-03 21:17:56,500 ERROR:loadgui:Error in gui: Func Show_Details, class IndexError ('list index out of range',)
+2019-11-03 21:18:41,794 DEBUG:__main__:Start main TEST
+2019-11-03 21:20:13,404 DEBUG:__main__:Start main TEST
+2019-11-03 21:20:25,419 DEBUG:__main__:Start main TEST
+2019-11-03 21:21:17,428 DEBUG:__main__:Start main TEST
+2019-11-03 21:22:05,742 DEBUG:__main__:Start main TEST
+2019-11-03 21:23:03,557 DEBUG:__main__:Start main TEST
+2019-11-03 21:23:12,860 DEBUG:__main__:Start numverse
+2019-11-03 21:23:12,885 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.025001 .
+2019-11-03 21:23:12,916 DEBUG:__main__:Completed scoring in 0:00:00.031002.
+2019-11-03 21:23:12,918 DEBUG:__main__:End main 0:00:09.361536
+2019-11-03 21:23:45,947 DEBUG:__main__:Start main TEST
+2019-11-03 21:25:31,337 DEBUG:__main__:Start main TEST
+2019-11-03 21:25:31,830 ERROR:loadgui:Error in gui: Func New_Board, class AttributeError ("'QLineEdit' object has no attribute 'getStyleSheet'",)
+2019-11-03 21:26:20,744 DEBUG:__main__:Start main TEST
+2019-11-03 21:27:50,355 DEBUG:__main__:Start numverse
+2019-11-03 21:27:50,373 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.018001 .
+2019-11-03 21:27:50,407 DEBUG:__main__:Completed scoring in 0:00:00.033002.
+2019-11-03 21:27:50,408 DEBUG:__main__:End main 0:01:29.664128
+2019-11-03 21:31:34,309 DEBUG:__main__:Start main TEST
+2019-11-03 21:33:00,953 DEBUG:__main__:Start numverse
+2019-11-03 21:33:00,977 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.023001 .
+2019-11-03 21:33:01,012 DEBUG:__main__:Completed scoring in 0:00:00.035002.
+2019-11-03 21:33:01,015 DEBUG:__main__:End main 0:01:26.705959
+2019-11-03 21:33:39,550 DEBUG:__main__:Start main TEST
+2019-11-03 21:35:10,458 DEBUG:__main__:Start numverse
+2019-11-03 21:35:10,472 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.013001 .
+2019-11-03 21:35:10,501 DEBUG:__main__:Completed scoring in 0:00:00.029001.
+2019-11-03 21:35:10,505 DEBUG:__main__:End main 0:01:30.955203
+2019-11-04 03:36:44,240 DEBUG:__main__:Start main TEST
+2019-11-04 03:37:45,809 DEBUG:__main__:Start numverse
+2019-11-04 03:37:45,837 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.028001 .
+2019-11-04 03:37:45,869 DEBUG:__main__:Completed scoring in 0:00:00.032002.
+2019-11-04 03:37:45,870 DEBUG:__main__:End main 0:01:01.629525
+2019-11-04 03:38:21,977 DEBUG:__main__:Start main TEST
+2019-11-04 03:41:33,175 DEBUG:__main__:Start main TEST
+2019-11-04 03:44:25,570 DEBUG:__main__:Start main TEST
+2019-11-04 03:44:55,721 DEBUG:__main__:Start numverse
+2019-11-04 03:44:55,735 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.013001 .
+2019-11-04 03:44:55,764 DEBUG:__main__:Completed scoring in 0:00:00.029002.
+2019-11-04 03:44:55,766 DEBUG:__main__:End main 0:00:30.195727
+2019-11-04 03:48:02,274 DEBUG:__main__:Start main TEST
+2019-11-04 03:51:06,741 DEBUG:__main__:Start main TEST
+2019-11-04 03:52:34,297 DEBUG:__main__:Start numverse
+2019-11-04 03:52:34,314 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.016001 .
+2019-11-04 03:52:34,341 DEBUG:__main__:Completed scoring in 0:00:00.027002.
+2019-11-04 03:52:34,342 DEBUG:__main__:End main 0:01:27.600011
+2019-11-04 03:54:06,642 DEBUG:__main__:Start main TEST
+2019-11-04 03:54:47,011 DEBUG:__main__:Start numverse
+2019-11-04 03:54:47,046 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.034002 .
+2019-11-04 03:54:47,073 DEBUG:__main__:Completed scoring in 0:00:00.027002.
+2019-11-04 03:54:47,075 DEBUG:__main__:End main 0:00:40.433313
+2019-11-04 03:54:51,272 DEBUG:__main__:Start main TEST
+2019-11-04 03:55:04,335 DEBUG:__main__:Start numverse
+2019-11-04 03:55:04,349 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.014001 .
+2019-11-04 03:55:04,376 DEBUG:__main__:Completed scoring in 0:00:00.026001.
+2019-11-04 03:55:04,377 DEBUG:__main__:End main 0:00:13.105749
+2019-11-04 03:55:29,481 DEBUG:__main__:Start main TEST
+2019-11-04 03:56:46,069 DEBUG:__main__:Start numverse
+2019-11-04 03:56:46,102 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.031002 .
+2019-11-04 03:56:46,173 DEBUG:__main__:Completed scoring in 0:00:00.069004.
+2019-11-04 03:56:50,162 DEBUG:__main__:End main 0:01:20.677615
+2019-11-04 04:00:49,368 DEBUG:__main__:Start main TEST
+2019-11-04 04:10:02,032 DEBUG:__main__:Start main TEST
+2019-11-04 04:10:47,501 DEBUG:__main__:Start numverse
+2019-11-04 04:10:47,521 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.019001 .
+2019-11-04 04:10:47,552 DEBUG:__main__:Completed scoring in 0:00:00.031002.
+2019-11-04 04:10:47,553 DEBUG:__main__:End main 0:00:45.521604
+2019-11-04 04:11:06,710 DEBUG:__main__:Start main TEST
+2019-11-04 04:12:49,326 DEBUG:__main__:Start numverse
+2019-11-04 04:12:49,343 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.015001 .
+2019-11-04 04:12:49,373 DEBUG:__main__:Completed scoring in 0:00:00.029002.
+2019-11-04 04:12:49,375 DEBUG:__main__:End main 0:01:42.664872
+2019-11-04 04:13:49,766 DEBUG:__main__:Start main TEST
+2019-11-04 04:13:59,393 ERROR:loadgui:Error in gui: Func Commit_Board, class ValueError ("invalid literal for int() with base 10: 't'",)
+2019-11-04 04:13:59,401 DEBUG:__main__:Start numverse
+2019-11-04 04:13:59,418 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.017001 .
+2019-11-04 04:13:59,451 DEBUG:__main__:Completed scoring in 0:00:00.033002.
+2019-11-04 04:13:59,453 DEBUG:__main__:End main 0:00:09.687554
+2019-11-04 04:14:07,457 DEBUG:__main__:Start main TEST
+2019-11-04 04:15:54,008 ERROR:loadgui:Error in gui: Func Commit_Board, class ValueError ("invalid literal for int() with base 10: 't'",)
+2019-11-04 04:15:54,018 DEBUG:__main__:Start numverse
+2019-11-04 04:15:54,032 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.014001 .
+2019-11-04 04:15:54,062 DEBUG:__main__:Completed scoring in 0:00:00.030001.
+2019-11-04 04:15:54,064 DEBUG:__main__:End main 0:01:46.607097
+2019-11-04 04:16:01,757 DEBUG:__main__:Start main TEST
+2019-11-04 04:19:28,135 ERROR:loadgui:Error in gui: Func New_Board, class IndexError ('list index out of range',)
+2019-11-04 04:19:28,172 DEBUG:__main__:Start numverse
+2019-11-04 04:19:28,198 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.026001 .
+2019-11-04 04:19:28,251 DEBUG:__main__:Completed scoring in 0:00:00.052003.
+2019-11-04 04:19:28,253 DEBUG:__main__:End main 0:03:26.495811
+2019-11-04 04:19:42,895 DEBUG:__main__:Start main TEST
+2019-11-04 04:19:49,999 ERROR:loadgui:Error in gui: Func New_Board, class IndexError ('list index out of range',)
+2019-11-04 04:19:50,014 DEBUG:__main__:Start numverse
+2019-11-04 04:19:50,065 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.050003 .
+2019-11-04 04:19:50,125 DEBUG:__main__:Completed scoring in 0:00:00.060003.
+2019-11-04 04:19:50,128 DEBUG:__main__:End main 0:00:07.233413
+2019-11-04 04:20:31,476 DEBUG:__main__:Start main TEST
+2019-11-04 04:22:15,393 DEBUG:__main__:Start main TEST
+2019-11-04 04:22:20,233 ERROR:loadgui:Error in gui: Func New_Board, class IndexError ('list index out of range',)
+2019-11-04 04:22:20,250 DEBUG:__main__:Start numverse
+2019-11-04 04:22:20,265 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.015001 .
+2019-11-04 04:22:20,298 DEBUG:__main__:Completed scoring in 0:00:00.033002.
+2019-11-04 04:22:20,299 DEBUG:__main__:End main 0:00:04.905281
+2019-11-04 04:22:29,461 DEBUG:__main__:Start main TEST
+2019-11-04 04:24:20,037 DEBUG:__main__:Start main TEST
+2019-11-04 04:31:06,316 DEBUG:__main__:Start main TEST
+2019-11-04 04:31:06,824 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:31:28,600 DEBUG:__main__:Start numverse
+2019-11-04 04:31:28,623 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.022001 .
+2019-11-04 04:31:28,656 DEBUG:__main__:Completed scoring in 0:00:00.032002.
+2019-11-04 04:31:28,658 DEBUG:__main__:End main 0:00:22.342278
+2019-11-04 04:31:44,528 DEBUG:__main__:Start main TEST
+2019-11-04 04:31:45,567 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:32:57,695 ERROR:loadgui:Error in gui: Func Select_Drop, class TypeError ("setText(self, str): argument 1 has unexpected type 'list'",)
+2019-11-04 04:32:57,723 DEBUG:__main__:Start numverse
+2019-11-04 04:32:57,753 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.030002 .
+2019-11-04 04:32:57,808 DEBUG:__main__:Completed scoring in 0:00:00.054003.
+2019-11-04 04:32:57,810 DEBUG:__main__:End main 0:01:13.282191
+2019-11-04 04:33:17,621 DEBUG:__main__:Start main TEST
+2019-11-04 04:33:18,034 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:33:25,681 ERROR:loadgui:Error in gui: Func Select_Drop, class TypeError ("setText(self, str): argument 1 has unexpected type 'list'",)
+2019-11-04 04:33:25,718 DEBUG:__main__:Start numverse
+2019-11-04 04:33:25,750 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.032001 .
+2019-11-04 04:33:25,782 DEBUG:__main__:Completed scoring in 0:00:00.032002.
+2019-11-04 04:33:25,783 DEBUG:__main__:End main 0:00:08.161467
+2019-11-04 04:33:56,689 DEBUG:__main__:Start main TEST
+2019-11-04 04:33:57,153 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:35:35,047 DEBUG:__main__:Start main TEST
+2019-11-04 04:35:35,513 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:36:45,173 DEBUG:__main__:Start main TEST
+2019-11-04 04:36:45,643 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:37:34,870 DEBUG:__main__:Start main TEST
+2019-11-04 04:37:35,301 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:38:23,032 ERROR:loadgui:Error in gui: Func New_Board, class IndexError ('list index out of range',)
+2019-11-04 04:38:23,054 DEBUG:__main__:Start numverse
+2019-11-04 04:38:23,078 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.023002 .
+2019-11-04 04:38:23,109 DEBUG:__main__:Completed scoring in 0:00:00.031001.
+2019-11-04 04:38:23,113 DEBUG:__main__:End main 0:00:48.242760
+2019-11-04 04:38:30,351 DEBUG:__main__:Start main TEST
+2019-11-04 04:38:30,768 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:38:41,143 ERROR:loadgui:Error in gui: Func New_Board, class IndexError ('list index out of range',)
+2019-11-04 04:38:41,172 DEBUG:__main__:Start numverse
+2019-11-04 04:38:41,203 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.031002 .
+2019-11-04 04:38:41,233 DEBUG:__main__:Completed scoring in 0:00:00.030002.
+2019-11-04 04:38:41,235 DEBUG:__main__:End main 0:00:10.883622
+2019-11-04 04:39:01,171 DEBUG:__main__:Start main TEST
+2019-11-04 04:39:01,640 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:59:16,636 DEBUG:__main__:Start main TEST
+2019-11-04 04:59:17,050 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:59:28,642 DEBUG:__main__:Start main TEST
+2019-11-04 04:59:29,058 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 04:59:47,958 ERROR:loadgui:Error in gui: Func New_Board, class IndexError ('list index out of range',)
+2019-11-04 04:59:47,996 DEBUG:__main__:Start numverse
+2019-11-04 04:59:48,024 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.027001 .
+2019-11-04 04:59:48,056 DEBUG:__main__:Completed scoring in 0:00:00.032002.
+2019-11-04 04:59:48,058 DEBUG:__main__:End main 0:00:19.416110
+2019-11-04 05:00:13,777 DEBUG:__main__:Start main TEST
+2019-11-04 05:00:29,436 DEBUG:__main__:Start main TEST
+2019-11-04 05:00:30,814 ERROR:loadgui:Error in gui: Func Refresh_Board, class IndexError ('list index out of range',)
+2019-11-04 05:00:37,455 DEBUG:__main__:Start main TEST
+2019-11-04 05:00:42,054 DEBUG:__main__:Start main TEST
+2019-11-04 05:12:51,203 DEBUG:__main__:Start numverse
+2019-11-04 05:12:51,233 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.030001 .
+2019-11-04 05:12:51,268 DEBUG:__main__:Completed scoring in 0:00:00.035002.
+2019-11-04 05:12:51,270 DEBUG:__main__:End main 0:13:34.634594
+2019-11-04 05:53:18,027 DEBUG:__main__:Start main TEST
+2019-11-04 05:55:08,858 DEBUG:__main__:Start main TEST
+2019-11-04 05:57:04,952 DEBUG:__main__:Start main TEST
+2019-11-04 05:58:16,601 DEBUG:__main__:Start main TEST
+2019-11-04 06:00:00,608 DEBUG:__main__:Start main TEST
+2019-11-04 06:13:50,789 DEBUG:__main__:Start main TEST
+2019-11-04 06:40:11,483 DEBUG:__main__:Start main TEST
+2019-11-04 06:42:07,521 DEBUG:__main__:Start numverse
+2019-11-04 06:42:07,561 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.040003 .
+2019-11-04 06:42:07,636 DEBUG:__main__:Completed scoring in 0:00:00.074004.
+2019-11-04 06:42:07,638 DEBUG:__main__:End main 0:01:56.154644
+2019-11-04 06:42:10,938 DEBUG:__main__:Start main TEST
+2019-11-04 06:44:16,878 DEBUG:__main__:Start numverse
+2019-11-04 06:44:16,891 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.013001 .
+2019-11-04 06:44:16,919 DEBUG:__main__:Completed scoring in 0:00:00.028002.
+2019-11-04 06:44:16,920 DEBUG:__main__:End main 0:02:05.982206
+2019-11-04 06:44:43,402 DEBUG:__main__:Start main TEST
+2019-11-04 06:45:49,512 DEBUG:__main__:Start numverse
+2019-11-04 06:45:49,533 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.020001 .
+2019-11-04 06:45:49,563 DEBUG:__main__:Completed scoring in 0:00:00.029001.
+2019-11-04 06:45:49,566 DEBUG:__main__:End main 0:01:06.163785
+2019-11-04 06:46:00,356 DEBUG:__main__:Start main TEST
+2019-11-04 06:52:21,522 DEBUG:__main__:Start numverse
+2019-11-04 06:52:21,536 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.014001 .
+2019-11-04 06:52:21,565 DEBUG:__main__:Completed scoring in 0:00:00.029002.
+2019-11-04 06:52:21,566 DEBUG:__main__:End main 0:06:21.209804

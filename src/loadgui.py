@@ -9,15 +9,20 @@ Todo:
 - Drop button should be enabled only after commit + select.
   New, rollback, drop, desel should disable it.
   (Gridtext, gtype and numdiff changes have no immediate effect).
-- Commit should mark null grid cells (red) and refuse to search combos.
+- Custom path selection, to augment partition. 
 
 Features:
 Gui with switchable forms and ad hoc modifications to any controls.
-Ad hocs include: Create board from plain text (resizable),
-commit style calc combos, css marks for special tiles and selection,
-select & drop tiles move. 
+Ad hocs include:
+- Create board from plain text (resizable).
+- Commit style calc combos, with some tested chain filtering.
+- Css marks for special tiles, selection and more.
+- Select & drop tiles move, emptied slots marked.
+- Stepping through a chain for clarification (manual currently).
+- Select partial chain by step, can drop by paritition.
 
 Future:
+- Step by step of a long chain (timed or on press).
 
 Bugs:
 - "AttributeError: Can't get attribute 'BNtrie' on <module '__main__' from..."
@@ -26,13 +31,15 @@ Bugs:
   Workaround: Conversion + load directly from the gui. 
 
 Notes:
-- TexteEdit control has toHtml / toPlainText methods for extracting the text.
+- TextEdit control has toHtml / toPlainText methods for extracting the text.
 - Lineedit / label have text property and method.
 - Haven't explicitly set it, but the tab order of the grid is cols-rows.
   This is important for input convenience.
 
 Version log:
-04/11/19 V0.9 Added empty tile detection.
+04/11/19 V0.91 Added step marking, limited chain partition (no direct access),
+                updating text grid on commit.
+03/11/19 V0.9 Added empty tile detection.
 03/11/19 V0.8 Added select & drop move + button.
 01/11/19 V0.7 Completed list handling up to groupings.
 31/10/19 V0.5 Completed basic design, grid generation, new + commit (p) + rollback board, colouring (p).
@@ -68,7 +75,7 @@ else: # PROD
 if __name__ == "__main__":
     import utils
     uti = utils
-    from utils import LOGMSG,METHCODES
+    from utils import LOGMSG,METHCODES,Deb_Prtlog,NLN
     # Guess I could import the engine functions, but this feels wrong for a test.
     MAXCMB = 0
     fnull = lambda *_:None
@@ -79,6 +86,7 @@ if __name__ == "__main__":
     Val_Conv = fnull
     Colour_Decision = fnull
     Print_Format = fnull
+    BNgraph = list
 else:
     # See note on relative imports.
     from mmain import uti
@@ -86,6 +94,7 @@ else:
     from mmain import BNgraph,BNtrie,MAXCMB
     from mmain import Graph_Input,Hexify,Convert_Dict,Load_Dict,Val_Conv
     from mmain import Colour_Decision,Print_Format
+    NLN = uti.NLN
     try:
         # Alt: Global call the first time a text board is committed.
         (tri1,tri2) = Load_Dict()
@@ -161,11 +170,16 @@ MAXTS = 4102444800 # 01/01/2100.
 MINDT = datetime.datetime(1970,1,2,2,0) # Below this causes oserr on ts.
 DATETYPE = MINDT.__class__
 DEFDT = datetime.datetime(1971,1,1)
+CMSEP = ","
 QUETXT = "{cmb}-{sc1}-{sc2}"
 SEPHILE = ["jpg","gif","png","jpeg", # Files to be opened with default editor.
            "mp4","ods","xls","xlsx","csv"]
 EDITXT = ["C:\\Program Files (x86)\\Notepad++\\notepad++.exe","notepad.exe"]
 FORMDIR = dict() # Ease of access to form loads.
+stepidx = None
+pclr = ""
+stchain = None
+edchain = None
 # Key for quick reference, v[0] for ini storage, v[1] default value.
 INIDDL = {"CHKUPD":("CheckUpdRem",1), # Boolean converted to string.
           "CHKFUL":("CheckLoadFull",0),
@@ -572,15 +586,22 @@ def Go_Form(curfrm,newfrm):
     FORMDIR[curfrm].hide()
     FORMDIR[newfrm].show()
 
-def Colour_Control(wedgie,r = None,g = None,b = None,a = None):
+def Colour_Control(wedgie,r = None,g = None,b = None,a = None,ovr = None):
     """Sets colour for a control widget.
     
     Uses the handy rgb + alpha css format.
     Send null to remove."""
-    if r is None:
-        wedgie.setStyleSheet("")
+    cssupd = ""
+    if ovr is not None:
+        cssupd = ovr
+    elif r is None:
+        cssupd = ""
     else:
-        wedgie.setStyleSheet(CSS_RGBA.format(r,g,b,a))
+        cssupd = CSS_RGBA.format(r,g,b,a)
+    
+    cssprv = wedgie.styleSheet()
+    wedgie.setStyleSheet(cssupd)
+    return (cssupd,cssprv)
 
 class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
     appname = "Main" 
@@ -601,6 +622,8 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         self.cmdCan.clicked.connect(self.Rollback_Board)
         # Plain func sends p2 = False which fails the trigger, hence lmb.
         self.cmdDrop.clicked.connect(lambda: self.Select_Drop())
+        self.cmdStep.clicked.connect(lambda: self.Step_Chain())
+        self.cmdParti.clicked.connect(lambda: self.Step_Partition())
         self.lstRes1.itemSelectionChanged.connect(
             lambda: self.Sel_Combo(self.lstRes1,"opt"))
         self.lstRes1.itemDoubleClicked.connect(
@@ -769,7 +792,7 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
         # Deb_Prtlog("Start showdet",logging.DEBUG) # Spam.
         try:
             if quemem is not None:
-                lclr = Colour_Decision(quemem,True) # Sel doesn't care for value.
+                lclr = Colour_Decision(quemem,1) # Sel doesn't care for value.
                 lboard2 = Hexify(self.ltxtBoard)
                 for i,_ in enumerate(quemem):
                     wboard = lboard2[quemem[i][0]][quemem[i][1]]
@@ -927,7 +950,7 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
             self.ltxtBoard = []
             sgi = Val_Conv(gi,True)
             sgi = Hexify(sgi)
-            lclr = Colour_Decision(gi,False)
+            lclr = Colour_Decision(gi,0)
             lclr = Hexify(lclr)
             if gi is not None:
                 for i,lcol in enumerate(gi):
@@ -992,6 +1015,10 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
             groot.Print_Scores(dang)
             print("---------------------")
             Print_Format(gi)
+            
+            ntxt = (CMSEP + NLN).join([CMSEP.join(l)
+                                       for l in Hexify(Val_Conv(gi,True))])
+            self.txtGrid.setText(ntxt)
         except Exception as err:
             Quiterr(err) 
     
@@ -1010,7 +1037,7 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
             self.lstRes2.clear()
             gi = Graph_Input(self.txtGrid.toPlainText())
             sgi = Val_Conv(gi,True)
-            lclr = Colour_Decision(gi,False)
+            lclr = Colour_Decision(gi,0)
             if gi is not None:
                 for i,_ in enumerate(gi):
                     wboard = self.ltxtBoard[i]
@@ -1018,14 +1045,105 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
                     Colour_Control(wboard,*lclr[i])
         except Exception as err:
             Quiterr(err)
+            
+    def Step_Chain(self,lchain = None): # parm1, parm2 which are returned.
+        """Steps through the currently selected chain.
+        
+        Marks each tile red, global tracks the current idx / override.
+        Rather than refresh the board it just alters 1-2 tiles.
+        Stores old colour directly since there's no link colouring parm.
+        Creep: Convert the globals to a form parms dict."""
+        global stepidx
+        global pclr
+        global stchain # Partition marks are completely skipped.
+        global edchain
+        try:
+            lboard2 = Hexify(self.ltxtBoard) # Would be useful to keep in class.
+            # Obtain chain from any combo type lists.
+            if lchain is None:
+                lchain = []
+                lcmb = MLSTCONT.Get_Group("combo")
+                for lstk in lcmb.keys():
+                    (cidx,_,_,quemem) = List_Getsel1(lcmb[lstk],lstk)
+                    if cidx >= 0: # Is selected.
+                        lchain = quemem
+            if len(lchain) == 0:
+                return (stepidx,pclr)
+            if stepidx is None: # Start new step series.
+                stepidx = 0
+            else: # Undo previous colour.
+                if stepidx not in (stchain,edchain): # Other than partitions.
+                    wboard = lboard2[lchain[stepidx][0]][lchain[stepidx][1]]
+                    Colour_Control(wboard,ovr = pclr)
+                stepidx = stepidx + 1
+                if stepidx >= len(lchain):
+                    stepidx = 0
+        
+            if stepidx not in (stchain,edchain): # Other than partitions.
+                wboard = lboard2[lchain[stepidx][0]][lchain[stepidx][1]]
+                lclr = Colour_Decision(wboard.text(),2)
+                (_,pclr) = Colour_Control(wboard,*lclr[0])
+            
+            return (stepidx,pclr)
+        except Exception as err:
+            Quiterr(err)
+    
+    def Step_Partition(self,lchain = None):
+        """Marks edges of a chain's partition slated for drop.
+        
+        Future: Display & control via textboxes."""
+        global stchain
+        global edchain
+        global stepidx
+        try:
+            if stepidx is not None:
+                lboard2 = Hexify(self.ltxtBoard)
+                # Obtain chain from any combo type lists.
+                if lchain is None:
+                    lchain = []
+                    lcmb = MLSTCONT.Get_Group("combo")
+                    for lstk in lcmb.keys():
+                        (cidx,_,_,quemem) = List_Getsel1(lcmb[lstk],lstk)
+                        if cidx >= 0: # Is selected.
+                            lchain = quemem
+                if stchain is None:
+                    stchain = stepidx
+                elif edchain is None:
+                    if stchain > stepidx:
+                        edchain = stchain
+                        stchain = stepidx
+                    else:
+                        edchain = stepidx
+                else: # Already set a partition, so remove it.
+                    # For convenience, resets the chain colouring.
+                    # No refresh to prevent step reset.
+                    #tstep = stepidx
+                    # self.Clear_Details()
+                    self.Show_Details(lchain)
+                    #stepidx = tstep # Reapply position, but no need to mark.
+                    stchain = stepidx
+                    edchain = None
+                wboard = lboard2[lchain[stepidx][0]][lchain[stepidx][1]]
+                lclr = Colour_Decision(wboard.text(),3)
+                Colour_Control(wboard,*lclr[0])
+        except Exception as err:
+            Quiterr(err)
     
     def Refresh_Board(self):
         """Resets colours sans combos.
         
-        Spam."""
+        Combo stepping is also cleared, naturally."""
+        global stepidx
+        global pclr
+        global stchain
+        global edchain
         try:
+            stepidx = None
+            pclr = ""
+            stchain = None
+            edchain = None
             lvals = [wedgie.text().strip() for wedgie in self.ltxtBoard]
-            lclr = Colour_Decision(lvals,False)
+            lclr = Colour_Decision(lvals,0)
             if lvals is not None:
                 for i,_ in enumerate(lvals):
                     wboard = self.ltxtBoard[i]
@@ -1036,10 +1154,13 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
     def Select_Drop(self,lchain = None):
         """Clears the grid of selected chain and curse destroyed tiles.
         
+        Also takes partition edges into account
         Cont: Should copy the new structure to grid text.
         Or mayhap commit ought to do so."""
         global quecmb1
         global quecmb2
+        global stchain
+        global edchain
         try:
             # Obtain chain from any combo type lists.
             if lchain is None:
@@ -1049,6 +1170,8 @@ class MainApp(QtWidgets.QMainWindow, mform.Ui_MainWindow):
                     (cidx,_,_,quemem) = List_Getsel1(lcmb[lstk],lstk)
                     if cidx >= 0: # Is selected.
                         lchain = quemem
+                if stchain is not None and edchain is not None:
+                    lchain = lchain[stchain:edchain + 1] # Inclusive of edges.
             
             # Prep the graph for chain move func.
             lvals = [wedgie.text() for wedgie in self.ltxtBoard]

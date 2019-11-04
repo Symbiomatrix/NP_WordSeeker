@@ -514,3 +514,41 @@
 2019-11-03 19:02:10,764 DEBUG:__main__:Start main
 2019-11-03 19:02:10,766 DEBUG:__main__:Start init parms
 2019-11-03 19:02:11,128 DEBUG:__main__:Start main screen init
+2019-11-03 20:34:57,960 DEBUG:__main__:Start main
+2019-11-03 20:34:57,965 DEBUG:__main__:Start init parms
+2019-11-03 20:34:58,356 DEBUG:__main__:Start main screen init
+2019-11-03 20:35:01,692 DEBUG:__main__:End main 0:00:03.726213
+2019-11-03 20:52:37,946 DEBUG:__main__:Start form creator
+2019-11-03 20:52:38,155 DEBUG:__main__:End form creator
+2019-11-03 21:15:03,857 DEBUG:__main__:Start main
+2019-11-03 21:15:03,859 DEBUG:__main__:Start init parms
+2019-11-03 21:15:04,235 DEBUG:__main__:Start main screen init
+2019-11-03 21:15:05,272 DEBUG:__main__:End main 0:00:01.414081
+2019-11-03 21:16:40,869 DEBUG:__main__:Start main
+2019-11-03 21:16:40,870 DEBUG:__main__:Start init parms
+2019-11-03 21:16:41,242 DEBUG:__main__:Start main screen init
+2019-11-03 21:16:45,954 DEBUG:__main__:End main 0:00:05.085291
+2019-11-04 03:01:16,877 DEBUG:__main__:Start form creator
+2019-11-04 03:01:17,043 DEBUG:__main__:End form creator
+2019-11-04 03:41:12,472 DEBUG:__main__:Start main
+2019-11-04 03:41:12,473 DEBUG:__main__:Start init parms
+2019-11-04 03:41:12,820 DEBUG:__main__:Start main screen init
+2019-11-04 03:41:17,511 DEBUG:__main__:End main 0:00:05.038288
+2019-11-04 03:41:22,629 DEBUG:__main__:Start main
+2019-11-04 03:41:22,630 DEBUG:__main__:Start init parms
+2019-11-04 03:41:22,973 DEBUG:__main__:Start main screen init
+2019-11-04 03:41:24,363 DEBUG:__main__:Start quit due to error
+2019-11-04 03:41:24,454 ERROR:__main__:Error in gui: Func Commit_Board, class NameError ("name 'BNgraph' is not defined",)
+2019-11-04 03:41:26,349 DEBUG:__main__:End main 0:00:03.719213
+2019-11-04 03:43:04,807 DEBUG:__main__:Start main
+2019-11-04 03:43:04,807 DEBUG:__main__:Start init parms
+2019-11-04 03:43:05,159 DEBUG:__main__:Start main screen init
+2019-11-04 03:43:06,963 DEBUG:__main__:Start quit due to error
+2019-11-04 03:43:06,985 ERROR:__main__:Error in gui: Func Commit_Board, class NameError ("name 'BNgraph' is not defined",)
+2019-11-04 03:43:07,015 DEBUG:__main__:End main 0:00:02.208127
+2019-11-04 03:44:08,387 DEBUG:__main__:Start main
+2019-11-04 03:44:08,387 DEBUG:__main__:Start init parms
+2019-11-04 03:44:08,752 DEBUG:__main__:Start main screen init
+2019-11-04 03:44:12,983 DEBUG:__main__:Start quit due to error
+2019-11-04 03:44:13,006 ERROR:__main__:Error in gui: Func Commit_Board, class TypeError ("'NoneType' object is not iterable",)
+2019-11-04 03:44:13,033 DEBUG:__main__:End main 0:00:04.646266

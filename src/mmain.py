@@ -7,6 +7,8 @@ Created on 20/09/19
 
 Todo: 
 - Finishing touches to main. Make it more robust to bad input.
+- Number split from text actually doesn't work. Fix it. 
+
 Features:
 Given a graph of possible movements, values, and 'specials' per node,
 and dictionary of good / bad words,
@@ -26,8 +28,10 @@ commit / rollback with single undo, dynamic alloc of tiles (per the same funcs),
 free mode swap, drop.
 
 Future:
-- Improve ui - modifier on left side by def (even when sequentialy);
-  kinda unnecessary with the gui being much better.
+- Improve ui - modifier on left side by def (even when sequential);
+  kinda unnecessary with the gui being much better, but not in new boards.
+- Numverse is very intense in simple grids.
+  The optimal plan of culling nodes is ideal, but picking maximal results may work.
 
 Notes:
 - Chain formula: score = clength * (1 + 3 * [gold tiles]) * base
@@ -41,6 +45,10 @@ Bugs:
 Yes please.
 
 Version log:
+03/11/19 V2.3 Numverse's max iters reduced to 10% for simple (123) grids (100k).
+                Added further culling of chains by length to 50% (41.3k).
+                Together, these prevent the gui from freezing 20s+.
+                Redesigned valconv to flatten any format correctly.  
 03/11/19 V2.2 Added tile move (combo selection only). - ALPHA RELEASE
 01/11/19 V2.1 Number mode complete, gui mostly done,
                 including selection colour gradients and conveniences.
@@ -188,7 +196,10 @@ DCOLOUR = {"gold":(2,(MAXCLR,MAXCLR,0,MAXCLR)),
            "curse":(1,(0,MAXCLR,0,MAXCLR)),
            "normal":(0,(None,None,None,None)),
            "combo":(-1,(LSTPH,LSTPH,LSTPH,LSTPH)),
+           "step":(-2,(MAXCLR,0,0,MAXCLR)),
+           "parti":(-3,(0,0,MAXCLR,MAXCLR)),
            "error":(-9,(MAXCLR,0,0,MAXCLR))}
+MAXCHAIN = 41300
 MAXCMB = 10
 
 LOGMSG = uti.LOGMSG
@@ -204,7 +215,11 @@ LOGMSG.update({
                 space separate values and denote +/* for gold / cursed.""",
 "grpprtmsg": "Current graph state:",
 "trievrok": "Completed trieversal in {} .",
-"numvrok": "Completed numversal in {} .",
+"numvrok": "Completed numversal with {} chains in {} .",
+"numvrprog": "Numverse {}% exhaustion in {} .",
+"cullchok": "Number of chains after culling {} in {} .",
+"wordscprog":"Scoring ~{}% complete in {}.",
+"wordscok":"Completed scoring in {}.",
 "null": "This is the end my friend."
 })
 METHCODES = uti.METHCODES
@@ -413,7 +428,7 @@ class BNgraph():
         # but I'm not sure that's a perfect cover.
         # Relying on past chains is difficult due to uniqueness cond.
         # Mayhap the best method is filtering all irrelevant cons prematurely. 
-        stopme = 10000000
+        stopme = 1000000
         cntstop = 0
         lres = []
         while vque:
@@ -430,11 +445,39 @@ class BNgraph():
                         vque.append((nchain,nnode))
             
             cntstop = cntstop + 1
+            if cntstop % (stopme // 10) == 0:
+                tdiff = uti.Ed_Timer("numverse")
+                Deb_Prtlog(LOGMSG["numvrprog"].format(
+                            cntstop // (stopme // 100),tdiff),logging.DEBUG)
             if cntstop >= stopme:
                 vque = None   
             
         tdiff = uti.Ed_Timer("numverse")
-        Deb_Prtlog(LOGMSG["numvrok"].format(tdiff),logging.DEBUG)
+        Deb_Prtlog(LOGMSG["numvrok"].format(len(lres),tdiff),logging.DEBUG)
+        return lres
+    
+    def Cull_Chains(self,lres,ncull = MAXCHAIN):
+        """When there are too many chains, removes a percentage by len.
+        
+        Creep: Counting the gold / curse prematurely may improve or obviate this,
+        wordscore would be O(1) and score based culling. Bit extra memory though."""
+        uti.St_Timer("cullchain")
+        if len(lres) <= ncull:
+            return lres
+        dlen = dict()
+        for lchain in lres:
+            len1 = len(lchain)
+            dlen[len1] = dlen.get(len1,0) + 1
+        tcnt = 0
+        maxcull = None
+        for len1 in sorted(dlen.keys(),reverse = True):
+            tcnt = tcnt + dlen[len1]
+            if tcnt > ncull and maxcull is None:
+                maxcull = len1
+        lres = [lchain for lchain in lres if len(lchain) >= maxcull]
+        
+        tdiff = uti.Ed_Timer("cullchain")
+        Deb_Prtlog(LOGMSG["cullchok"].format(len(lres),tdiff),logging.DEBUG)
         return lres
     
     def Word_Score(self,lres):
@@ -444,7 +487,9 @@ class BNgraph():
         As for danger, whilst removing 2+ tiles below cursed is bad,
         it's most important to rank depth exponentially (game over at bottom).
         Don't actually measure depth precisely, but the exp should suffice."""
+        uti.St_Timer("wordscore")
         lsort = []
+        lres = self.Cull_Chains(lres)
         for lchain in lres:
             vscore1 = 0
             vscore2 = 0
@@ -468,10 +513,18 @@ class BNgraph():
             vscore1 = vscore1 * (1 + gcnt * 3)
             vscore2 = vscore2 * (1 + gcnt * 3)
             lsort.append((lchain,vscore1,vscore2))
+
+            if len(lres) >= MAXCHAIN:
+                tdiff = uti.Ed_Timer("wordscore")
+                if len(lsort) % (MAXCHAIN // 10) == 0:
+                    Deb_Prtlog(LOGMSG["wordscprog"].format(
+                                len(lsort) // (MAXCHAIN // 100),tdiff),logging.DEBUG)
         
         lsort1 = sorted(lsort,key=lambda x:x[1],reverse = True)
         lsort2 = sorted(lsort,key=lambda x:x[2],reverse = True)
-                
+        
+        tdiff = uti.Ed_Timer("wordscore")
+        Deb_Prtlog(LOGMSG["wordscok"].format(tdiff),logging.DEBUG)
         return (lsort1,lsort2)
 
     def Print_Scores(self,lscore,maxvals = MAXCMB):
@@ -736,15 +789,32 @@ def Val_Conv(val,tostr = True):
     """Converts a value or list to str or tup. 
     
     Save for variable format string - send those to ginp.
-    Used in gui / backend integration."""
-    if uti.islstup(val) and len(val) > 2:
-        if uti.islstup(val[0]) and len(val[0]) > 2:
-            lcnv = Flatten([[Val_Conv1(v,tostr)
-                             for v in l1]
-                             for l1 in val])
-        else:
-            lcnv = [Val_Conv1(v,tostr) for v in val]
-    else:
+    Used in gui / backend integration.
+    Assumed format of single values: string, tuple(2), list(tuple(2)).
+    L2 can be a small to large board, L1 of 2+ elems is unhexed."""
+    lcnv = None
+    ltype = None
+    if not uti.islstup(val): # String.
+        ltype = 0
+    elif len(val) == 0:
+        lcnv = []
+    elif len(val) > 2: # Big L1 of strings / L2.
+        ltype = 1
+    elif not uti.islstup(val[0]): # Tuple(2).
+        ltype = 0
+    elif len(val[0]) > 2: # Small L2 of strings.
+        ltype = 1
+    elif not uti.islstup(val[0][0]): # list(tup(2))
+        ltype = 0
+    else: # Small L2 of converted vals.
+        ltype = 1
+    if ltype == 1:
+        # Alt: A better specific test might be existence of ints.
+        if len(Flatten1(val)[0]) > 2: # Full grid size of strings.
+            lcnv = [Val_Conv1(v,tostr) for v in Flatten(val)]
+        else: # Flattened to tups.
+            lcnv = [Val_Conv1(v,tostr) for v in Flatten1(val)]
+    elif ltype == 0:
         lcnv = Val_Conv1(val,tostr)
         
     return lcnv
@@ -773,14 +843,14 @@ def Val_Conv1(val,tostr = True):
     
     return vcnv
 
-def Colour_Decision(val,indmark = False):
+def Colour_Decision(val,indmark = 0):
     """Colours gold, cursed and marked combo tiles.
     
     Returns a list of colour tups rgba.
     Joint effort with gui.
     The serial combo colour gradient is made of interwoven colours for clarity.
     This is not perfect (min 4 colours in a 2d map), but may suffice with alpha."""
-    if indmark:
+    if indmark == 1:
         if len(val) == 1: # Unrealistic edge case.
             lclr = [(uti.List_Format(DCOLOUR["combo"][1],LSTPH,MAXCLR,MAXCLR))]
         else:
@@ -790,10 +860,16 @@ def Colour_Decision(val,indmark = False):
             lclr = [(uti.List_Format(DCOLOUR["combo"][1],LSTPH,
                                      *vclr[i % 2],20 + i * vfactor))
                     for i,_ in enumerate(val)]
+    elif indmark == 2: # Step detection. Gui keeps track in this case.
+        lclr = [DCOLOUR["step"][1]]
+    elif indmark == 3:
+        lclr = [DCOLOUR["parti"][1]]
     else:
         lcnv = Val_Conv(val,False)
-        if not uti.islstup(lcnv[0]): # Colour a single tile.
-            lcnv = [lcnv]
+        if len(lcnv) == 0:
+            pass # New board.
+        elif not uti.islstup(lcnv[0]):
+            lcnv = [lcnv] # Colour a single tile.
         lclr = []
         for v in lcnv:
             if v[0] == "" or v[0] is None: # Empty tiles.
@@ -804,11 +880,53 @@ def Colour_Decision(val,indmark = False):
                         lclr.append(DCOLOUR[k][1])
     return lclr
 
-def Flatten(l2):
-    """Flattens a list (one layer).
+def Flatten(ldeep):
+    """Flattens a list (multilayer, distinguishing is difficult).
     
-    Spam."""
-    return [v for l1 in l2 for v in l1]
+    This method is ordered, at the cost of repeated push / pop;
+    encountering an inner list, will open that fully first.
+    Many of these iters can be optimised with a loop."""
+    #return [v for l1 in l2 for v in l1]
+    lflat = []
+    q1 = deque()
+    q1.append((ldeep,0))
+    while q1:
+        (lcur,cidx) = q1.pop()
+        if cidx < len(lcur):
+            q1.append((lcur,cidx + 1))
+            vent = lcur[cidx]
+            if uti.islstup(vent): # Another list, push for reopening.
+                q1.append((vent,0))
+            else:
+                lflat.append(vent)
+    
+    return lflat
+
+def Flatten1(ldeep):
+    """Flattens up to one layer depth (eg list of tups).
+    
+    Rather simple function - if current has no list ents,
+    leave it alone."""
+    lflat = []
+    q1 = deque()
+    q1.append((ldeep,0))
+    while q1:
+        (lcur,cidx) = q1.pop()
+        indskip = False
+        if cidx == 0:
+            lchk = [v for v in lcur if uti.islstup(v)]
+            if len(lchk) == 0:
+                lflat.append(lcur)
+                indskip = True
+        if cidx < len(lcur) and not indskip:
+            q1.append((lcur,cidx + 1))
+            vent = lcur[cidx]
+            if uti.islstup(vent): # Another list, push for reopening.
+                q1.append((vent,0))
+            else:
+                lflat.append(vent)
+    
+    return lflat
 
 def Hexify(lval,rcnt = 6,indconvex = False):
     """Converts L1 to L2 of hex shape.
