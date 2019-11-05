@@ -1069,3 +1069,53 @@
 2019-11-04 20:26:42,508 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.016001 .
 2019-11-04 20:26:42,541 DEBUG:__main__:Completed scoring in 0:00:00.033002.
 2019-11-04 20:26:42,542 DEBUG:__main__:End main 0:00:03.130179
+2019-11-05 04:47:55,765 DEBUG:__main__:Start main TEST
+2019-11-05 05:25:14,327 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-05 05:25:14,374 DEBUG:__main__:Start numverse
+2019-11-05 05:25:14,409 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.035002 .
+2019-11-05 05:25:14,476 DEBUG:__main__:Completed scoring in 0:00:00.066004.
+2019-11-05 05:25:14,480 DEBUG:__main__:End main 0:37:18.715047
+2019-11-05 05:25:27,044 DEBUG:__main__:Start main TEST
+2019-11-05 05:27:26,000 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-05 05:27:26,024 DEBUG:__main__:Start numverse
+2019-11-05 05:27:26,068 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.042003 .
+2019-11-05 05:27:26,142 DEBUG:__main__:Completed scoring in 0:00:00.073004.
+2019-11-05 05:27:26,145 DEBUG:__main__:End main 0:01:59.100812
+2019-11-05 05:27:37,814 DEBUG:__main__:Start main TEST
+2019-11-05 05:28:13,660 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-05 05:28:13,670 DEBUG:__main__:Start numverse
+2019-11-05 05:28:13,696 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.026002 .
+2019-11-05 05:28:13,745 DEBUG:__main__:Completed scoring in 0:00:00.049003.
+2019-11-05 05:28:13,746 DEBUG:__main__:End main 0:00:35.932055
+2019-11-05 05:28:25,861 DEBUG:__main__:Start main TEST
+2019-11-05 05:28:31,577 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-05 05:28:31,588 DEBUG:__main__:Start numverse
+2019-11-05 05:28:31,616 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.027002 .
+2019-11-05 05:28:31,657 DEBUG:__main__:Completed scoring in 0:00:00.041002.
+2019-11-05 05:28:31,659 DEBUG:__main__:End main 0:00:05.797331
+2019-11-05 05:28:39,548 DEBUG:__main__:Start main TEST
+2019-11-05 05:28:46,316 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-05 05:28:46,328 DEBUG:__main__:Start numverse
+2019-11-05 05:28:46,353 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.025002 .
+2019-11-05 05:28:46,398 DEBUG:__main__:Completed scoring in 0:00:00.044002.
+2019-11-05 05:28:46,401 DEBUG:__main__:End main 0:00:06.853392
+2019-11-05 05:28:50,008 DEBUG:__main__:Start main TEST
+2019-11-05 05:28:55,682 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-05 05:28:55,692 DEBUG:__main__:Start numverse
+2019-11-05 05:28:55,720 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.028002 .
+2019-11-05 05:28:55,758 DEBUG:__main__:Completed scoring in 0:00:00.038002.
+2019-11-05 05:28:55,762 DEBUG:__main__:End main 0:00:05.753329
+2019-11-05 05:29:21,323 DEBUG:__main__:Start main TEST
+2019-11-05 05:32:18,930 DEBUG:__main__:Start main TEST
+2019-11-05 14:17:14,488 DEBUG:__main__:Start main TEST
+2019-11-05 14:17:29,136 ERROR:loadgui:Error in gui: Func Rollback_Board, class IndexError ('list index out of range',)
+2019-11-05 14:17:29,157 DEBUG:__main__:Start numverse
+2019-11-05 14:17:29,192 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.034002 .
+2019-11-05 14:17:29,240 DEBUG:__main__:Completed scoring in 0:00:00.048003.
+2019-11-05 14:17:29,242 DEBUG:__main__:End main 0:00:14.753844
+2019-11-05 14:17:55,738 DEBUG:__main__:Start main TEST
+2019-11-05 14:19:05,892 DEBUG:__main__:Start main TEST
+2019-11-05 14:19:54,575 DEBUG:__main__:Start numverse
+2019-11-05 14:19:54,594 DEBUG:__main__:Completed numversal with 1936 chains in 0:00:00.019001 .
+2019-11-05 14:19:54,642 DEBUG:__main__:Completed scoring in 0:00:00.048003.
+2019-11-05 14:19:54,644 DEBUG:__main__:End main 0:00:48.752788

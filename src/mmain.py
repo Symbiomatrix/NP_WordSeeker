@@ -49,9 +49,12 @@ Notes:
   # RETILEPREF = ([=-]?.)|(.[=-]?) # Simple version, 5- -> (5,-).
 
 Bugs:
-Yes please.
+V Rollback fails when graph input receives two sequential tiles -
+  apparently missed out on nonstr also failing to separate the twain.
+  Fixed by having ginp handle the special case of 2 seq tiles. 
 
 Version log:
+05/11/19 V2.5 Crash fix.
 04/11/19 V2.4 Upgraded graph inp to handle sequential tiles (both ints and mods),
                 1X tiles and to use valconv. It is quite robust now.
 03/11/19 V2.3 Numverse's max iters reduced to 10% for simple (123) grids (100k).
@@ -802,8 +805,11 @@ def Graph_Input(iliner = None,inddig2 = True):
             
             # Convert tiles and apply changer funcs.
             if cinp1 is not None:
-                # Should be in legible format, list of strings.
-                cinp2 = Val_Conv(cinp1,False) 
+                # Handles edge case by forcing the structure.
+                if uti.islstup(cinp) and len(cinp1) == 2:
+                    cinp2 = [Val_Conv(e,False) for e in cinp1]
+                else:
+                    cinp2 = Val_Conv(cinp1,False) 
                 if prmchg is not None: # Alter a prior tile.
                     if prmchg[0] == 1:
                         tinp.insert(prmchg[1],cinp2)
@@ -830,11 +836,10 @@ def Val_Conv(val,tostr = True):
     Assumed format of single values: string, tuple(2), list(tuple(2)).
     L2 can be a small to large board, L1 of 2+ elems is unhexed.
     
-    Bug: As of V2.4/5, it has been tested for all cases;
-    its only error is *list of 2 strs + tostr* with any number of wrappers,
-    which val1 must interpret as a tup and thus fuse to one tile.
-    There are currently no such use cases,
-    as raw input always goes through graphinp before valconv -> str."""
+    Known bug: As of V2.4/5, it has been tested for all cases;
+    its only error is *list of 2 strs* with any number of wrappers,
+    which val1 must interpret as a tup and thus fuse to one erroneous tile.
+    The main case, ginp of 2 seq chars, has been addressed."""
     lcnv = None
     ltype = None
     if not uti.islstup(val): # String.
